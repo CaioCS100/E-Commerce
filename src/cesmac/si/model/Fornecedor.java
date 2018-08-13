@@ -4,7 +4,7 @@ public class Fornecedor {
 	private Integer id;
 	private String nome;
 	private String cnpj;
-	
+	private boolean ativo;
 	
 	public Integer getId() {
 		return id;
@@ -24,7 +24,10 @@ public class Fornecedor {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
-	
-	
+	public boolean isAtivo() {
+		return ativo;
+	}
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 }
