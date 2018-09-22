@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/core">
-<head>
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:b="http://bootsfaces.net/ui">
+<h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
-</head>
-<body>
-		<h1>teste 123</h1>
-</body>
+<title>Cadastro de Funcionario</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:outputLabel for="nome" value="Nome: " />
+		<b:inputText id="nome" value="" />
+		
+		<h:outputLabel for="cpf" value="CPF: " />
+		<b:inputText id="cpf" value="" mask="###.###.###-##"/>
+		
+		<h:outputLabel for="dataNasc" value="Data de Nascimento: " />
+		<b:inputText id="dataNasc" value=""/>
+		
+		<h:outputLabel for="cep" value="CEP: " />
+		<b:inputText id="cep" value="" mask="#####-###"/>
+		
+		<h:outputLabel for="telefone" value="Telefone: " />
+		<b:inputText id="telefone" value="" mask="(##) #####-####"/>
+		
+		<h:outputLabel for="email" value="Email: " />
+		<b:inputText id="email" value=""/>
+		
+		<h:outputLabel for="bairro" value="Bairro: " />
+		<b:inputText id="bairro" value=""/>
+		
+		<h:outputLabel for="cidade" value="Cidade: " />
+		<b:inputText id="cidade" value=""/>
+	</h:form>
+</h:body>
 </html>
