@@ -1,39 +1,67 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:b="http://bootsfaces.net/ui">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Cadastro de Funcionario</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="StyleSheet" type="text/css" href="css/estiloFuncionario.css" />
+	<title>Cadastro de Funcionario</title>
 </h:head>
 <h:body>
-	<h:form>
-		<h:outputLabel for="nome" value="Nome: " />
-		<b:inputText id="nome" value="" />
-		
-		<h:outputLabel for="cpf" value="CPF: " />
-		<b:inputText id="cpf" value="" mask="###.###.###-##"/>
-		
-		<h:outputLabel for="dataNasc" value="Data de Nascimento: " />
-		<b:inputText id="dataNasc" value=""/>
-		
-		<h:outputLabel for="cep" value="CEP: " />
-		<b:inputText id="cep" value="" mask="#####-###"/>
-		
-		<h:outputLabel for="telefone" value="Telefone: " />
-		<b:inputText id="telefone" value="" mask="(##) #####-####"/>
-		
-		<h:outputLabel for="emaila" value="Email: " />
-		<b:inputText id="emaila" value=""/>
-		
-		<h:outputLabel for="bairro" value="Bairro: " />
-		<b:inputText id="bairro" value=""/>
-		
-		<h:outputLabel for="cidade" value="Cidade: " />
-		<b:inputText id="cidade" value=""/>
+	<h:form enctype="multipart/form-data">
+		<div id="container">
+			<b:column medium-screen="4">
+				<b:inputText id="nome" label="Nome:"
+					value="#{controleFuncionario.model.nome}" />
+
+				<b:inputText id="cpf" label="CPF:"
+					value="#{controleFuncionario.model.cpf}" mask="###.###.###-##" />
+
+				<b:inputText id="cep" value="#{controleFuncionario.model.cep}"
+					label="CEP:" mask="#####-###" />
+
+				<b:dateTimePicker label="Data de Nascimento:" showTime="false"
+					showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
+					required="true" value="#{controleFuncionario.model.dataNascimento}" />
+
+				<b:inputText id="telefone"
+					value="#{controleFuncionario.model.telefone}" label="Telefone:"
+					mask="(##) #####-####" />
+
+				<b:inputText type="email" id="email"
+					value="#{controleFuncionario.model.email}" label="Email:" />
+
+				<b:inputText id="endereco"
+					value="#{controleFuncionario.model.endereco}" label="Endereço:" />
+
+				<b:inputText id="bairro" value="#{controleFuncionario.model.bairro}"
+					label="Bairro:" />
+			</b:column>
+			<b:column medium-screen="4">
+				<b:inputText id="cidade" value="#{controleFuncionario.model.cidade}"
+					label="Cidade:" />
+
+				<b:selectOneMenu label="UF:" value="#{controleFuncionario.model.uf}">
+					<f:selectItem itemLabel="Selecione uma UF" />
+					<f:selectItems value="#{utilitarios.listaUfs}" />
+				</b:selectOneMenu>
+
+				<b:inputText id="cargo" value="#{controleFuncionario.model.cargo}"
+					label="Cargo:" />
+
+				<b:inputText id="qtdHoras"
+					value="#{controleFuncionario.model.qtdHoras}"
+					label="Quantidade de horas:" />
+
+				<b:inputText id="salario"
+					value="#{controleFuncionario.model.salario}" label="Salário:" />
+					<b:commandButton type="submit"
+						action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" />
+			</b:column>
+			
+		</div>
 	</h:form>
 </h:body>
 </html>

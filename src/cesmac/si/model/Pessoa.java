@@ -1,56 +1,33 @@
 package cesmac.si.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Pessoa {
 
 	private String nome;
-	private int cpf;
-	private Date data_nascimento;
-	private int cep;
-	private int telefone;
-	private int ddd;
+	private String cpf;
+	private Date dataNascimento;
+	private String cep;
+	private String ddd;
+	private String telefone;
 	private String email;
 	private String endereco;
 	private String bairro;
 	private String cidade;
 	private String uf;
 	private Byte[] foto;
+	
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getCpf() {
-		return cpf;
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
-	public void setCpf(int cpf) {
-		this.cpf = cpf;
-	}
-	public Date getData_nascimento() {
-		return data_nascimento;
-	}
-	public void setData_nascimento(Date data_nascimento) {
-		this.data_nascimento = data_nascimento;
-	}
-	public int getCep() {
-		return cep;
-	}
-	public void setCep(int cep) {
-		this.cep = cep;
-	}
-	public int getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(int telefone) {
-		this.telefone = telefone;
-	}
-	public int getDdd() {
-		return ddd;
-	}
-	public void setDdd(int ddd) {
-		this.ddd = ddd;
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	public String getEmail() {
 		return email;
@@ -88,5 +65,30 @@ public class Pessoa {
 	public void setFoto(Byte[] foto) {
 		this.foto = foto;
 	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public String getDdd() {
+		return ddd;
+	}
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+	
 	
 }

@@ -4,13 +4,13 @@ public class Funcionario extends Pessoa {
 
 	private String cargo;
 	private Double salario;
-	private int qtd_horas;
+	private int qtdHoras;
 	
-	public int getQtd_horas() {
-		return qtd_horas;
+	public int getQtdHoras() {
+		return qtdHoras;
 	}
-	public void setQtd_horas(int qtd_horas) {
-		this.qtd_horas = qtd_horas;
+	public void setQtdHoras(int qtdHoras) {
+		this.qtdHoras = qtdHoras;
 	}
 	public String getCargo() {
 		return cargo;
