@@ -1,7 +1,11 @@
 package cesmac.si.controller;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
@@ -11,12 +15,22 @@ import cesmac.si.dao.FuncionarioDAO;
 import cesmac.si.model.Funcionario;
 
 @ManagedBean(name="controleFuncionario")
+@ViewScoped
 public class FuncionarioController {
 	
 	private UploadedFile foto;
-	private Funcionario model = new Funcionario();
-	private FuncionarioDAO dao = new FuncionarioDAO();
+	private Funcionario model;
+	private FuncionarioDAO dao;
 	private final UtilitariosController controleUtilitario = new UtilitariosController();
+	private List<Funcionario> ListaFuncionario;
+	
+	@PostConstruct
+	public void init() 
+	{
+		this.model = new Funcionario();
+		this.dao = new FuncionarioDAO();
+		this.ListaFuncionario = this.dao.listarTodosFuncionarios();
+	}
 	
 	public void salvarFuncionario()
 	{
@@ -25,11 +39,15 @@ public class FuncionarioController {
 		this.model.setCep(this.controleUtilitario.retirarMascara(this.model.getCep()));
 		this.model.setDdd(telefoneDDD[0]);
 		this.model.setTelefone(telefoneDDD[1]);
-		dao.cadastrarFuncionario(model);
+		if(dao.cadastrarFuncionario(model))
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionário Cadastrado com sucesso"));
+		}
+		else
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Cadastrar o Funcionário"));
+		}
 	}
-	
-	
-	
 	
 	
 	public void teste(FileUploadEvent event)
@@ -40,6 +58,10 @@ public class FuncionarioController {
 		
 	}
 	
+	public List<Funcionario> getListaFuncionario()
+	{
+		return this.ListaFuncionario;
+	}
 	
 	public Funcionario getModel() {
 		return model;
