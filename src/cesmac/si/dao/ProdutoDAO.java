@@ -1,4 +1,4 @@
-package Produto;
+package cesmac.si.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cesmac.si.connection.ConnectionFactory;
+
 public class ProdutoDAO {
 	public String Insert(String nome,float preco,String descricao,int quantidade,String tipo) throws SQLException{ 
 		
-		ConnectionFactory CF = new ConnectionFactory();
-		Connection connection=CF.getConnection();
+		ConnectionFactory conn = new ConnectionFactory();
+		Connection connection=conn.getConnection();
 		
 		String status="";
 	    String sql="INSERT INTO Produto(nome,preco,descricao,quantidade) VALUES(?,?,?,?)";
@@ -36,7 +38,7 @@ public class ProdutoDAO {
 
 	        return status;
 	}
-	public ResutSet Select(String tipoDeCondicao,String condicao,ArrayList tipos){
+	public ResultSet Select(String tipoDeCondicao,String condicao,ArrayList tipos) throws SQLException{
 		
 		ResultSet RS=null;
 		
@@ -61,9 +63,9 @@ public class ProdutoDAO {
 
 	        if(tipos!=null){//se usuario selecionou "tipos"
 
-	                for(int i=0;i<tipo.size();i++){
-	                sql+="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"% AND tipo="+tipo.get(i)+"";  
-	                    if(i!=tipo.size()){//Quando for o ultimo nao adicionara union
+	                for(int i=0;i<tipos.size();i++){
+	                sql+="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
+	                    if(i!=tipos.size()){//Quando for o ultimo nao adicionara union
 	                        sql+=" UNION ";
 	                    }
 	                }
@@ -121,18 +123,18 @@ public class ProdutoDAO {
 
 	}
 	public ArrayList VerificarEstoque(){
-	    String sql="SELECT * FROM produto";
+//	    String sql="SELECT * FROM produto";
 	    ArrayList Aviso=new ArrayList();     
-	    
-	        while(RS.next()){
-	        	
-	            if(RS.getInt("quantidadeNoEstoque") >= RS.getInt("quantidadeConsideradaBaixa")){
-	                Aviso.add("O produto "+RS.getString("nome")+"(de ID:"+RS.getInt("id")+") esta com estoque baixo\n"+
-	                          "Estoque atual:"+RS.getInt("quantidadeNoEstoque")+
-	                          "(Quantidade considerada baixa em "+RS.getInt("quantidadeConsideradaBaixa")+")");
-	            }
-	            
-	        }
+//	    
+//	        while(RS.next()){
+//	        	
+//	            if(RS.getInt("quantidadeNoEstoque") >= RS.getInt("quantidadeConsideradaBaixa")){
+//	                Aviso.add("O produto "+RS.getString("nome")+"(de ID:"+RS.getInt("id")+") esta com estoque baixo\n"+
+//	                          "Estoque atual:"+RS.getInt("quantidadeNoEstoque")+
+//	                          "(Quantidade considerada baixa em "+RS.getInt("quantidadeConsideradaBaixa")+")");
+//	            }
+//	            
+//	        }
 	        return Aviso;
 
 	}
