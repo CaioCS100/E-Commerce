@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Listar Funcionarios</title>
+</h:head>
+<h:body>
+	<p:dataTable value="#{controleFuncionario.listaFuncionario}"
+		var="funcionario">
+
+		<p:column headerText="Nome">
+			<h:outputText value="#{funcionario.nome}" />
+		</p:column>
+
+		<p:column headerText="CPF">
+			<h:outputText value="#{funcionario.cpf}" />
+		</p:column>
+
+		<p:column headerText="CEP">
+			<h:outputText value="#{funcionario.cep}" />
+		</p:column>
+
+		<p:column headerText="Data de Nascimento">
+			<h:outputText value="#{funcionario.dataNascimento}" />
+		</p:column>
+
+		<p:column headerText="Telefone">
+			<h:outputText value="#{funcionario.telefone}" />
+		</p:column>
+
+		<p:column headerText="Email">
+			<h:outputText value="#{funcionario.email}" />
+		</p:column>
+
+		<p:column headerText="Endereço">
+			<h:outputText value="#{funcionario.endereco}" />
+		</p:column>
+
+		<p:column headerText="Cidade">
+			<h:outputText value="#{funcionario.cidade}" />
+		</p:column>
+
+		<p:column headerText="UF">
+			<h:outputText value="#{funcionario.uf}" />
+		</p:column>
+
+		<p:column headerText="Cargo">
+			<h:outputText value="#{funcionario.cargo}" />
+		</p:column>
+
+		<p:column headerText="Quantidade de Horas">
+			<h:outputText value="#{funcionario.qtdHoras}" />
+		</p:column>
+
+		<p:column headerText="Salário">
+			<h:outputText value="#{funcionario.salario}" />
+		</p:column>
+
+	</p:dataTable>
+
+</h:body>
+</html>
