@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Pessoa {
 
+	private int id;
 	private String nome;
 	private String cpf;
 	private Date dataNascimento;
@@ -16,7 +17,15 @@ public class Pessoa {
 	private String cidade;
 	private String uf;
 	private Byte[] foto;
+	private String senha;
+	private String complemento;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -89,6 +98,17 @@ public class Pessoa {
 	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
-	
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public String getComplemento() {
+		return complemento;
+	}
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 	
 }
