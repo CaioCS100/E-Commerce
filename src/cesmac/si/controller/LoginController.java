@@ -3,12 +3,12 @@ package cesmac.si.controller;
 import javax.faces.bean.ManagedBean;
 
 import cesmac.si.dao.LoginDAO;
-import cesmac.si.model.Usuario;
+import cesmac.si.model.Pessoa;
 
 @ManagedBean
 public class LoginController {
 	
-	Usuario model = new Usuario();
+	Pessoa model = new Pessoa();
 	LoginDAO dao = new LoginDAO();
 	
 	public String fazerLogin()
@@ -21,11 +21,11 @@ public class LoginController {
 		return "Template?faces-redirect=true";
 	}
 
-	public Usuario getModel() {
+	public Pessoa getModel() {
 		return model;
 	}
 
-	public void setModel(Usuario model) {
+	public void setModel(Pessoa model) {
 		this.model = model;
 	}
 

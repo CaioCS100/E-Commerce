@@ -4,66 +4,33 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" 
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<link rel="StyleSheet" type="text/css" href="css/estiloFuncionario.css" />
+	<link href="css/estiloFuncionario.css" type="text/css"
+		rel="stylesheet" />
 	<title>Cadastro de Funcionario</title>
 </h:head>
 <h:body>
-	<h:form enctype="multipart/form-data">
 	<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-		<div id="container">
-			<b:column medium-screen="4">
-				<b:inputText id="nome" label="Nome:"
-					value="#{controleFuncionario.model.nome}" />
-
-				<b:inputText id="cpf" label="CPF:"
-					value="#{controleFuncionario.model.cpf}" mask="###.###.###-##" />
-
-				<b:inputText id="cep" value="#{controleFuncionario.model.cep}"
-					label="CEP:" mask="#####-###" />
-
-				<b:dateTimePicker label="Data de Nascimento:" showTime="false"
-					showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
-					required="true" value="#{controleFuncionario.model.dataNascimento}" />
-
-				<b:inputText id="telefone"
-					value="#{controleFuncionario.model.telefone}" label="Telefone:"
-					mask="(##) #####-####" />
-
-				<b:inputText type="email" id="email"
-					value="#{controleFuncionario.model.email}" label="Email:" />
-
-				<b:inputText id="endereco"
-					value="#{controleFuncionario.model.endereco}" label="Endereço:" />
-
-				<b:inputText id="bairro" value="#{controleFuncionario.model.bairro}"
-					label="Bairro:" />
-			</b:column>
-			<b:column medium-screen="4">
-				<b:inputText id="cidade" value="#{controleFuncionario.model.cidade}"
-					label="Cidade:" />
-
-				<b:selectOneMenu label="UF:" value="#{controleFuncionario.model.uf}">
-					<f:selectItem itemLabel="Selecione uma UF" />
-					<f:selectItems value="#{utilitarios.listaUfs}" />
-				</b:selectOneMenu>
-
-				<b:inputText id="cargo" value="#{controleFuncionario.model.cargo}"
-					label="Cargo:" />
-
-				<b:inputText id="qtdHoras"
-					value="#{controleFuncionario.model.qtdHoras}"
-					label="Quantidade de horas:" />
-
-				<b:inputText id="salario"
-					value="#{controleFuncionario.model.salario}" label="Salário:" />
-				<b:commandButton type="submit"
+		<p:autoUpdate />
+	</p:messages>
+	<h:form enctype="multipart/form-data">
+		<div id="tamanhoForm">
+		<div id="ui-header">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<ui:insert name="header">
+							<ui:include src="CamposFuncionario.xhtml" />
+						</ui:insert>
+					</b:column>
+				</b:row>
+			</b:container>
+			<b:commandButton type="submit"
 					action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" />
-			</b:column>
+		</div>
 		</div>
 	</h:form>
 </h:body>

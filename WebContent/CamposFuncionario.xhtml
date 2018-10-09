@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+	<div id="container">
+		<b:column medium-screen="4" col-md="6">
+			<b:inputText id="nome" label="Nome:"
+				value="#{controleFuncionario.model.nome}" />
+
+			<b:inputText id="cpf" label="CPF:"
+				value="#{controleFuncionario.model.cpf}" mask="###.###.###-##" />
+
+			<b:inputText id="cep" value="#{controleFuncionario.model.cep}"
+				label="CEP:" mask="#####-###" />
+
+			<b:dateTimePicker label="Data de Nascimento:" showTime="false"
+				showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
+				required="true" value="#{controleFuncionario.model.dataNascimento}" />
+
+			<b:inputText id="telefone"
+				value="#{controleFuncionario.model.telefone}" label="Telefone:"
+				mask="(##) #####-####" />
+
+			<b:inputText type="email" id="email"
+				value="#{controleFuncionario.model.email}" label="Email:" />
+
+			<b:inputText id="endereco"
+				value="#{controleFuncionario.model.endereco}" label="Endereço:" />
+
+		</b:column>
+		<b:column medium-screen="4" col-md="6">
+
+			<b:inputText id="bairro" value="#{controleFuncionario.model.bairro}"
+				label="Bairro:" />
+
+			<b:inputText id="cidade" value="#{controleFuncionario.model.cidade}"
+				label="Cidade:" />
+
+			<b:selectOneMenu label="UF:" value="#{controleFuncionario.model.uf}">
+				<f:selectItem itemLabel="Selecione uma UF" />
+				<f:selectItems value="#{utilitarios.listaUfs}" />
+			</b:selectOneMenu>
+
+			<b:inputText id="cargo" value="#{controleFuncionario.model.cargo}"
+				label="Cargo:" />
+
+			<b:inputText id="qtdHoras"
+				value="#{controleFuncionario.model.qtdHoras}"
+				label="Quantidade de horas:" />
+
+			<b:inputText id="salario"
+				value="#{controleFuncionario.model.salario}" label="Salário:" />
+		</b:column>
+	</div>
+</h:body>
+</html>
