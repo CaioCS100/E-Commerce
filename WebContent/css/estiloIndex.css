@@ -1,0 +1,24 @@
+.img{
+	width: 250px;
+	height:200px;
+}
+
+.label-title{
+	 margin-left: 12%;
+}
+
+.label-title-small{
+	 margin-left: 20%;
+}
+
+.label-desc{
+	 margin-left: 12%;
+}
+
+.label-desc-small{
+	 margin-left: 20%;
+}   
+
+.line{
+	margin-bottom: 5%;
+}   
