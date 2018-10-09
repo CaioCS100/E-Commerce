@@ -3,40 +3,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<link href="css/estiloViewMostrarFuncionario.css" type="text/css" rel="stylesheet" />
+	<link href="css/estiloViewMostrarFuncionario.css" type="text/css"
+		rel="stylesheet" />
 	<title>Listar Funcionarios</title>
 </h:head>
 <h:body>
-
+	<p:messages id="messages" showDetail="true" closable="true">
+		<p:autoUpdate />
+	</p:messages>
 	<h:form id="formFuncionario">
 		<b:dataTable value="#{controleFuncionario.listaFuncionario}"
 			var="funcionario" id="idFuncionario" fixedHeader="true"
 			scroll-size="400px" scroll-x="false" responsive="true"
 			custom-lang-url="//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
 			searching="true" page-length="5" page-length-menu="5,10">
+			<b:dataTableColumn value="#{funcionario.id}" />
 			<b:dataTableColumn value="#{funcionario.nome}" />
 			<b:dataTableColumn value="#{funcionario.cpf}" />
 			<b:dataTableColumn value="#{funcionario.cep}" />
 			<b:dataTableColumn value="#{funcionario.telefone}" />
-			<b:dataTableColumn value="#{funcionario.dataNascimento}"/>
+			<b:dataTableColumn value="#{funcionario.dataNascimento}" />
 			<b:dataTableColumn value="#{funcionario.email}" />
 			<b:dataTableColumn value="#{funcionario.cargo}" />
 			<b:dataTableColumn value="#{funcionario.qtdHoras}" />
 			<b:dataTableColumn label="Ações">
-				<b:commandButton icon="edit" ajax="true" styleClass="botaoTabela"
-					update="@(.editableCarTable)" onclick="ajax:car.edit()"
-					tooltip="Editar" tooltip-position="top">
+				<b:commandButton icon="edit" styleClass="botaoTabela"
+					tooltip="Editar" tooltip-position="top" process="@this" ajax="true"
+					update=":modalEditar"
+					action="#{controleFuncionario.carregarDadosParaEditarFuncionario(funcionario)}">
 				</b:commandButton>
-				<b:commandButton class="fa fa-trash botaoTabela" ajax="true"
-					update="@(.editableCarTable)" onclick="ajax:car.edit()"
-					tooltip="Excluir" tooltip-position="top">
+
+				<b:commandButton class="fa fa-trash botaoTabela"
+					tooltip="Excluir" tooltip-position="top" ajax="true"
+					update=":formFuncionario"
+					action="#{controleFuncionario.deletarFuncionario(funcionario)}">
 				</b:commandButton>
 			</b:dataTableColumn>
 		</b:dataTable>
 	</h:form>
+
+	<b:modal title="Editar Funcionário" styleClass="modalPseudoClass"
+		id="modal">
+		<h:form id="modalEditar">
+			<div id="ui-header">
+				<b:container fluid="true">
+					<b:row>
+						<b:column>
+							<ui:insert name="header">
+								<ui:include src="CamposFuncionario.xhtml" />
+							</ui:insert>
+						</b:column>
+					</b:row>
+				</b:container>
+				<b:commandButton type="submit" ajax="true"
+					action="#{controleFuncionario.editarFuncionario()}" value="Editar" 
+					update=":formFuncionario"/>
+			</div>
+		</h:form>
+	</b:modal>
 
 </h:body>
 </html>

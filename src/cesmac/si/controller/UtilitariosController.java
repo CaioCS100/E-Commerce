@@ -1,6 +1,7 @@
 package cesmac.si.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -29,6 +30,28 @@ public class UtilitariosController {
 		retorno[1] = telefone;
 		
 		return retorno;
+	}
+	
+	public String putMascara(String valorSemMascara, String tipoMascara)
+	{
+		String valorComMascara = "";
+		int j = 0;
+		
+		for (int i = 0; i < tipoMascara.length(); i++) 
+		{
+			if(tipoMascara.charAt(i) == '#')
+			{
+				valorComMascara += valorSemMascara.charAt(j);
+				j++;
+			}
+			else
+			{
+				valorComMascara += tipoMascara.charAt(i);
+			}
+		}
+		
+		
+		return valorComMascara;
 	}
 
 	private List<String> getUFs()
