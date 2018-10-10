@@ -1,18 +1,19 @@
-package cesmac.si.dao;
+package Produt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-import cesmac.si.connection.ConnectionFactory;
+
 
 public class ProdutoDAO {
-	public String Insert(String nome,float preco,String descricao,int quantidade,String tipo) throws SQLException{ 
+	public String Insert(String nome,String preco,String descricao,int quantidade,String tipo) throws SQLException, ClassNotFoundException{ 
 		
-		ConnectionFactory conn = new ConnectionFactory();
-		Connection connection=conn.getConnection();
+		Conexao CF = new Conexao();
+		Connection connection=CF.getConnection();
 		
 		String status="";
 	    String sql="INSERT INTO Produto(nome,preco,descricao,quantidade) VALUES(?,?,?,?)";
@@ -21,7 +22,7 @@ public class ProdutoDAO {
 
 			PreparedStatement ps = connection.prepareStatement(sql);
 	        ps.setString(1,nome);
-	        ps.setFloat(2,preco);
+	        ps.setString(2,preco);
 	        ps.setString(3,descricao);
 	        ps.setInt(4,quantidade);
 			ps.setString(5,tipo);
@@ -38,11 +39,11 @@ public class ProdutoDAO {
 
 	        return status;
 	}
-	public ResultSet Select(String tipoDeCondicao,String condicao,ArrayList tipos) throws SQLException{
+	public List Select(String tipoDeCondicao,String condicao,ArrayList<?> tipos) throws SQLException, ClassNotFoundException{
 		
 		ResultSet RS=null;
 		
-		ConnectionFactory CF = new ConnectionFactory();
+		Conexao CF = new Conexao();
 		Connection connection=CF.getConnection();
 		
 	    if(tipoDeCondicao.equals("id")){
@@ -64,7 +65,7 @@ public class ProdutoDAO {
 	        if(tipos!=null){//se usuario selecionou "tipos"
 
 	                for(int i=0;i<tipos.size();i++){
-	                sql+="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
+	                sql+="SELECT * FROM produto WHERE nomeProduto ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
 	                    if(i!=tipos.size()){//Quando for o ultimo nao adicionara union
 	                        sql+=" UNION ";
 	                    }
@@ -82,12 +83,18 @@ public class ProdutoDAO {
 	        }
 
 	    }
-       return RS;
+	    List <Produto> Objetos=new ArrayList <Produto> ();
+		while(RS.next()){
+			
+			
+			Objetos.add(new Produto(RS.getString("nome")));
+		}
+		return Objetos;
 	}
-	public String Update(int id,String nome,float preco,String descricao,int quantidadeNoEstoque) throws SQLException{
+	public String Update(int id,String nome,String preco,String descricao,int quantidadeNoEstoque) throws SQLException, ClassNotFoundException{
 	    String status="";
 
-	    ConnectionFactory CF = new ConnectionFactory();
+	    Conexao CF = new Conexao();
 		Connection connection=CF.getConnection();
        
 	    try{
@@ -95,7 +102,7 @@ public class ProdutoDAO {
 			String sql="UPDATE Produto SET nome=?,preco=?,descricao=?,quantidadeNoEstoque=? WHERE id=?";
 				PreparedStatement ps = connection.prepareStatement(sql);
 					ps.setString(1,nome);
-					ps.setFloat(2,preco);
+					ps.setString(2,preco);
 					ps.setString(3,descricao);
 					ps.setInt(4,quantidadeNoEstoque);
 					ps.setInt(5,id);
@@ -114,40 +121,52 @@ public class ProdutoDAO {
 	        return status;
 
 	}
-	public String Remove(int id){
+	public String Remove(int id) throws ClassNotFoundException{
 		
-		ConnectionFactory CF = new ConnectionFactory();
+		Conexao CF = new Conexao();
 		Connection connection=CF.getConnection();
 		
 		return null;
 
 	}
-	public ArrayList VerificarEstoque(){
-//	    String sql="SELECT * FROM produto";
+	
+	public List<Produto> t(){
+		List <Produto> Guardar = new ArrayList<Produto>();
+		Guardar.add(new Produto("Ian"));
+		
+		Guardar.add(new Produto("Jorge"));
+		
+		System.out.print(Guardar.get(0).nome);
+		System.out.print(Guardar.get(1).nome);
+		return Guardar;
+		
+	}
+	/*public ArrayList VerificarEstoque(){
+	    String sql="SELECT * FROM produto";
 	    ArrayList Aviso=new ArrayList();     
-//	    
-//	        while(RS.next()){
-//	        	
-//	            if(RS.getInt("quantidadeNoEstoque") >= RS.getInt("quantidadeConsideradaBaixa")){
-//	                Aviso.add("O produto "+RS.getString("nome")+"(de ID:"+RS.getInt("id")+") esta com estoque baixo\n"+
-//	                          "Estoque atual:"+RS.getInt("quantidadeNoEstoque")+
-//	                          "(Quantidade considerada baixa em "+RS.getInt("quantidadeConsideradaBaixa")+")");
-//	            }
-//	            
-//	        }
+	    
+	        while(RS.next()){
+	        	
+	            if(RS.getInt("quantidadeNoEstoque") >= RS.getInt("quantidadeConsideradaBaixa")){
+	                Aviso.add("O produto "+RS.getString("nome")+"(de ID:"+RS.getInt("id")+") esta com estoque baixo\n"+
+	                          "Estoque atual:"+RS.getInt("quantidadeNoEstoque")+
+	                          "(Quantidade considerada baixa em "+RS.getInt("quantidadeConsideradaBaixa")+")");
+	            }
+	            
+	        }
 	        return Aviso;
 
-	}
+	}*/
 
 
 /*
 	-produto
 	id
 	nome VARCHAR
-	descriçao VARCHAR
+	descriÃ§ao VARCHAR
 	tipo VARCHAR
 	//subtipo VARCHAR
-	preço FLOAT
+	preÃ§o FLOAT
 	quantidadeNoEstoque INT
 	quantidadeConsideradaBaixa INT
 
