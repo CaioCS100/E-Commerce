@@ -20,8 +20,8 @@ public class ClienteDAO {
 	public Boolean cadastrarUsuario(Pessoa usuario) {
 		boolean cadastrou = false;
 		
-		String sql = "INSERT INTO public.usuarios(nome, senha, cpf, data_nascimento, cep, telefone, ddd, email, endereco, bairro, complemento) " + 
-				"	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO public.usuarios(nome, senha, cpf, data_nascimento, cep, telefone, ddd, email, endereco, bairro, complemento, cidade, uf) " + 
+				"	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		con = ConnectionFactory.getConnection();
 		try {
 			ps = con.prepareStatement(sql);
@@ -36,6 +36,8 @@ public class ClienteDAO {
 			ps.setString(9, usuario.getEndereco());
 			ps.setString(10, usuario.getBairro());
 			ps.setString(11, usuario.getComplemento());
+			ps.setString(12, usuario.getCidade());
+			ps.setString(13, usuario.getUf());
 			ps.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
@@ -51,11 +53,12 @@ public class ClienteDAO {
 		return cadastrou;
 	}
 	
-	public Pessoa editarUsuario(Pessoa usuario) {
+	public Boolean editarUsuario(Pessoa usuario) {
 		
 		String sql = "UPDATE public.usuarios SET  nome = ? , senha = ?, cpf = ?, data_nascimento = ?, cep = ?, telefone = ?, ddd = ?, email = ?, endereco = ?, bairro = ?, complemento = ?" + 
-				"	WHERE id = ?";
+				"cidade = ?, uf = ?	WHERE id = ?";
 		con = ConnectionFactory.getConnection();
+		Boolean usuarioEditado = false;
 		try {
 			ps = con.prepareStatement(sql);
 			
@@ -71,10 +74,13 @@ public class ClienteDAO {
 			ps.setString(9, usuario.getEndereco());
 			ps.setString(10, usuario.getBairro());
 			ps.setString(11, usuario.getComplemento());
-			ps.setInt(12, usuario.getId());
+			ps.setString(12, usuario.getCidade());
+			ps.setString(13, usuario.getUf());
+			ps.setInt(14, usuario.getId());
 			ps.executeUpdate();
 			con.commit();
 			con.close();
+			usuarioEditado = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -85,7 +91,7 @@ public class ClienteDAO {
 			}
 		}
 		
-		return usuario;
+		return usuarioEditado;
 	}
 	
 	
@@ -137,7 +143,7 @@ public class ClienteDAO {
 		Pessoa usuario = new Pessoa();
 		List<Pessoa> listaUsuariosAtivos = new ArrayList<>();
 		
-		String sql = "SELECT id, nome, cpf, data_nascimento, cep, telefone, ddd, email, endereco, bairro, complemento" + 
+		String sql = "SELECT id, nome, senha, cpf, data_nascimento, cep, telefone, ddd, email, endereco, bairro, complemento, cidade, uf" + 
 				"	FROM public.usuarios WHERE ativo = true";
 		
 		con = ConnectionFactory.getConnection();
@@ -149,6 +155,7 @@ public class ClienteDAO {
 			while(rs.next()) {
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
+				usuario.setSenha(rs.getString("senha"));
 				usuario.setCpf(rs.getString("cpf"));
 				usuario.setDataNascimento(rs.getDate("data_nascimento"));
 				usuario.setCep(rs.getString("cep"));
@@ -158,6 +165,8 @@ public class ClienteDAO {
 				usuario.setEndereco(rs.getString("endereco"));
 				usuario.setBairro(rs.getString("bairro"));
 				usuario.setComplemento(rs.getString("complemento"));
+				usuario.setCidade(rs.getString("cidade"));
+				usuario.setUf(rs.getString("uf"));
 				
 				listaUsuariosAtivos.add(usuario);
 			}

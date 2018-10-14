@@ -8,7 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<link href="css/estiloFuncionario.css" type="text/css"
+	<link href="css/estiloCliente.css" type="text/css"
 		rel="stylesheet" />
 	<title>Cadastro de cliente</title>
 </h:head>
@@ -29,7 +29,7 @@
 				</b:row>
 			</b:container>
 			<b:commandButton type="submit"
-					action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" />
+					action="#{clienteController.cadastrarCliente()}" value="Salvar" />
 		</div>
 		</div>
 	</h:form>

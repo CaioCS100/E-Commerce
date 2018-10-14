@@ -4,48 +4,53 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets">	
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<link href="css/estiloViewMostrarFuncionario.css" type="text/css"
+	<link href="css/estiloViewMostrarCliente.css" type="text/css"
 		rel="stylesheet" />
 	<title>Listar clientes</title>
 </h:head>
+<f:metadata>
+    <f:viewAction action="#{clienteController.listarClientes}" />
+</f:metadata>
 <h:body>
 	<p:messages id="messages" showDetail="true" closable="true">
 		<p:autoUpdate />
 	</p:messages>
-	<h:form id="formFuncionario">
+	<h:form id="formCliente">
 		<b:dataTable value="#{clienteController.listaclientes}"
 			var="cliente" id="idCliente" fixedHeader="true"
 			scroll-size="400px" scroll-x="false" responsive="true"
 			custom-lang-url="//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
 			searching="true" page-length="5" page-length-menu="5,10">
 			<b:dataTableColumn value="#{cliente.nome}" />
+			<b:dataTableColumn value="#{cliente.cpf}" />
 			<b:dataTableColumn value="#{cliente.cep}" />
 			<b:dataTableColumn value="#{cliente.telefone}" />
 			<b:dataTableColumn value="#{cliente.dataNascimento}" />
 			<b:dataTableColumn value="#{cliente.email}" />
-			<b:dataTableColumn value="#{cliente.complemento}" />
+			<b:dataTableColumn value="#{cliente.cidade}" />
+			<b:dataTableColumn value="#{cliente.uf}" />
 			<b:dataTableColumn label="Ações">
 				<b:commandButton icon="edit" styleClass="botaoTabela"
 					tooltip="Editar" tooltip-position="top" process="@this" ajax="true"
-					update=":modalEditar"
-					action="#{controleFuncionario.carregarDadosParaEditarFuncionario(funcionario)}">
+					update=":modalEditarCliente"
+					action="#{clienteController.carregarDadosParaEditarCliente(cliente)}">
 				</b:commandButton>
 
 				<b:commandButton class="fa fa-trash botaoTabela"
 					tooltip="Excluir" tooltip-position="top" ajax="true"
-					update=":formFuncionario"
-					action="#{controleFuncionario.deletarFuncionario(funcionario)}">
+					update=":formCliente"
+					action="#{clienteController.removerCliente(cliente.id)}">
 				</b:commandButton>
 			</b:dataTableColumn>
 		</b:dataTable>
 	</h:form>
 
-	<b:modal title="Editar Funcionário" styleClass="modalPseudoClass"
+	<b:modal title="Editar Cliente" styleClass="modalPseudoClass"
 		id="modal">
-		<h:form id="modalEditar">
+		<h:form id="modalEditarCliente">
 			<div id="ui-header">
 				<b:container fluid="true">
 					<b:row>
@@ -57,8 +62,8 @@
 					</b:row>
 				</b:container>
 				<b:commandButton type="submit" ajax="true"
-					action="#{controleFuncionario.editarFuncionario()}" value="Editar" 
-					update=":formFuncionario"/>
+					action="#{clienteController.editarCliente()}" value="Editar" 
+					update=":formCliente"/>
 			</div>
 		</h:form>
 	</b:modal>
