@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+	<div id="container">
+		<b:column medium-screen="4" col-md="6">
+			<b:inputText id="nome" label="Nome:"
+				value="#{clienteController.cliente.nome}" />
+
+			<b:inputText id="cpf" label="CPF:"
+				value="#{clienteController.cliente.cpf}" mask="###.###.###-##" />
+
+			<b:dateTimePicker label="Data de Nascimento:" showTime="false"
+				showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
+				required="true" value="#{clienteController.cliente.dataNascimento}" />
+				
+			<b:inputText id="cep" value="#{clienteController.cliente.cep}"
+				label="CEP:" mask="#####-###" />
+
+			<b:inputText id="telefone"
+				value="#{clienteController.cliente.telefone}" label="Telefone:"
+				mask="(##) #####-####" />
+
+			<b:inputText type="email" id="email"
+				value="#{clienteController.cliente.email}" label="Email:" />
+			
+			<b:inputSecret id="senha" label="Senha:"
+				value="#{clienteController.cliente.senha}" />	
+
+		</b:column>
+		<b:column medium-screen="4" col-md="6">
+		
+			<b:inputText id="endereco"
+				value="#{clienteController.cliente.endereco}" label="Endereço:" />
+
+			<b:inputText id="bairro" value="#{clienteController.cliente.bairro}"
+				label="Bairro:" />
+
+			<b:inputText id="cidade" value="#{clienteController.cliente.cidade}"
+				label="Cidade:" />
+				
+			<b:inputText id="complemento" value="#{clienteController.cliente.complemento}"
+				label="Complemento:" />	
+
+			<b:selectOneMenu label="UF:" value="#{clienteController.cliente.uf}">
+				<f:selectItem itemLabel="Selecione uma UF" />
+				<f:selectItems value="#{utilitarios.listaUfs}" />
+			</b:selectOneMenu>
+			
+		</b:column>
+	</div>
+</h:body>
+</html>

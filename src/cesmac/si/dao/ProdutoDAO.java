@@ -1,4 +1,4 @@
-package Produt;
+package cesmac.si.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

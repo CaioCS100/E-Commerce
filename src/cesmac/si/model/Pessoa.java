@@ -18,10 +18,7 @@ public class Pessoa {
 	private String uf;
 	private Byte[] foto;
 	private String senha;
-<<<<<<< HEAD
 	private String complemento;
-=======
->>>>>>> refs/remotes/origin/master
 	
 	public int getId() {
 		return id;
@@ -107,7 +104,7 @@ public class Pessoa {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-<<<<<<< HEAD
+
 	public String getComplemento() {
 		return complemento;
 	}
@@ -116,7 +113,3 @@ public class Pessoa {
 	}
 	
 }
-=======
-	
-}
->>>>>>> refs/remotes/origin/master
