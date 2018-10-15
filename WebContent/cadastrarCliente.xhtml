@@ -16,7 +16,7 @@
 	<p:messages id="messages" showDetail="true" closable="true">
 		<p:autoUpdate />
 	</p:messages>
-	<h:form enctype="multipart/form-data">
+	<h:form enctype="multipart/form-data" id="cadastro">
 		<div id="tamanhoForm">
 		<div id="ui-header">
 			<b:container fluid="true">
@@ -29,7 +29,7 @@
 				</b:row>
 			</b:container>
 			<b:commandButton type="submit"
-					action="#{clienteController.cadastrarCliente()}" value="Salvar" />
+					action="#{clienteController.cadastrarCliente()}" value="Salvar" ajax="true" update="cadastro"/>
 		</div>
 		</div>
 	</h:form>

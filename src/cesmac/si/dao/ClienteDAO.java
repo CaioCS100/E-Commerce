@@ -28,7 +28,8 @@ public class ClienteDAO {
 			ps.setString(1, usuario.getNome());
 			ps.setString(2, usuario.getSenha());
 			ps.setString(3, usuario.getCpf());
-			ps.setDate(4, (Date) usuario.getDataNascimento());
+			java.sql.Date birthDay = new java.sql.Date(usuario.getDataNascimento().getTime());
+			ps.setDate(4, birthDay);
 			ps.setString(5, usuario.getCep());
 			ps.setString(6, usuario.getTelefone());
 			ps.setString(7, usuario.getDdd());
@@ -40,6 +41,7 @@ public class ClienteDAO {
 			ps.setString(13, usuario.getUf());
 			ps.executeUpdate();
 			con.commit();
+			cadastrou = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -55,8 +57,8 @@ public class ClienteDAO {
 	
 	public Boolean editarUsuario(Pessoa usuario) {
 		
-		String sql = "UPDATE public.usuarios SET  nome = ? , senha = ?, cpf = ?, data_nascimento = ?, cep = ?, telefone = ?, ddd = ?, email = ?, endereco = ?, bairro = ?, complemento = ?" + 
-				"cidade = ?, uf = ?	WHERE id = ?";
+		String sql = "UPDATE public.usuarios SET  nome = ? , senha = ?, cpf = ?, data_nascimento = ?, cep = ?, telefone = ?, ddd = ?, email = ?, endereco = ?, bairro = ?, complemento = ?," + 
+				" cidade = ?, uf = ? WHERE id = ?";
 		con = ConnectionFactory.getConnection();
 		Boolean usuarioEditado = false;
 		try {
@@ -66,7 +68,8 @@ public class ClienteDAO {
 			ps.setString(1, usuario.getNome());
 			ps.setString(2, usuario.getSenha());
 			ps.setString(3, usuario.getCpf());
-			ps.setDate(4, (Date) usuario.getDataNascimento());
+			java.sql.Date birthDay = new java.sql.Date(usuario.getDataNascimento().getTime());
+			ps.setDate(4, birthDay);
 			ps.setString(5, usuario.getCep());
 			ps.setString(6, usuario.getTelefone());
 			ps.setString(7, usuario.getDdd());
@@ -140,7 +143,6 @@ public class ClienteDAO {
 	
 	public List<Pessoa> listarUsuarios() {
 		
-		Pessoa usuario = new Pessoa();
 		List<Pessoa> listaUsuariosAtivos = new ArrayList<>();
 		
 		String sql = "SELECT id, nome, senha, cpf, data_nascimento, cep, telefone, ddd, email, endereco, bairro, complemento, cidade, uf" + 
@@ -153,6 +155,7 @@ public class ClienteDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				Pessoa usuario = new Pessoa();
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setSenha(rs.getString("senha"));

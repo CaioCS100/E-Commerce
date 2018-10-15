@@ -19,7 +19,6 @@ import cesmac.si.model.Pessoa;
 public class ClienteController {
 	private Pessoa cliente = new Pessoa();
 	private List<Pessoa> listaclientes = new ArrayList<>();
-	private Pessoa clienteSelecionado = new Pessoa();
 	public Pessoa getCliente() {
 		return cliente;
 	}
@@ -33,14 +32,13 @@ public class ClienteController {
 		this.listaclientes = listaclientes;
 	}	 
 	
-	public Pessoa getClienteSelecionado() {
-		return clienteSelecionado;
-	}
-	public void setClienteSelecionado(Pessoa clienteSelecionado) {
-		this.clienteSelecionado = clienteSelecionado;
-	}
 	public void cadastrarCliente() {
-		
+		UtilitariosController utilitariosController = new UtilitariosController();
+		String[] telefoneDDD =  utilitariosController.retirarMascaraTelefone(this.cliente.getTelefone());
+		this.cliente.setDdd(telefoneDDD[0]);
+		this.cliente.setTelefone(telefoneDDD[1]);
+		this.cliente.setCpf(utilitariosController.retirarMascara(this.cliente.getCpf()));
+		this.cliente.setCep(utilitariosController.retirarMascara(this.cliente.getCep()));
 		if(new ClienteDAO().cadastrarUsuario(cliente)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Cliente Cadastrado com sucesso"));
@@ -49,6 +47,7 @@ public class ClienteController {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Cadastrar o cliente"));
 		}
+		cliente = new Pessoa();
 	}
 	
 	public void listarClientes() {
@@ -56,15 +55,23 @@ public class ClienteController {
 	}
 	
 	public void carregarDadosParaEditarCliente(Pessoa cliente) {
-		this.clienteSelecionado = cliente;
+		this.cliente = cliente;
 		PrimeFaces.current().executeScript("$('#modal').modal('show')");
 	}
 	
 	public void editarCliente() {
 		
-		if(new ClienteDAO().editarUsuario(this.clienteSelecionado)) {
+		UtilitariosController utilitariosController = new UtilitariosController();
+		String[] telefoneDDD =  utilitariosController.retirarMascaraTelefone(this.cliente.getTelefone());
+		this.cliente.setDdd(telefoneDDD[0]);
+		this.cliente.setTelefone(telefoneDDD[1]);
+		this.cliente.setCpf(utilitariosController.retirarMascara(this.cliente.getCpf()));
+		this.cliente.setCep(utilitariosController.retirarMascara(this.cliente.getCep()));
+		if(new ClienteDAO().editarUsuario(this.cliente)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Cliente editado com sucesso"));
+			
+			PrimeFaces.current().executeScript("$('#modal').modal('hide')");
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -82,5 +89,6 @@ public class ClienteController {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em excluir o cliente"));
 		}
+		listarClientes();
 	}
 }

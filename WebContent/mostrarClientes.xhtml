@@ -34,7 +34,7 @@
 			<b:dataTableColumn value="#{cliente.uf}" />
 			<b:dataTableColumn label="Ações">
 				<b:commandButton icon="edit" styleClass="botaoTabela"
-					tooltip="Editar" tooltip-position="top" process="@this" ajax="true"
+					tooltip="Editar" tooltip-position="top" ajax="true"
 					update=":modalEditarCliente"
 					action="#{clienteController.carregarDadosParaEditarCliente(cliente)}">
 				</b:commandButton>
