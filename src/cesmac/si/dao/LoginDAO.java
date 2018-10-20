@@ -9,13 +9,12 @@ import cesmac.si.connection.ConnectionFactory;
 import cesmac.si.model.Pessoa;
 
 public class LoginDAO {
-	private Pessoa model = new Pessoa();
 	private PreparedStatement pst;
 	private ResultSet rs;
 	
 	public Boolean autenticarLogin(Pessoa modelLogin)
 	{
-		String sql = "select * from usuarios  where nome = ? and senha = ? limit 1";
+		String sql = "select * from usuarios  where email = ? and senha = ? limit 1";
 		Connection conn = ConnectionFactory.getConnection();
 		try {
 			this.pst = conn.prepareStatement(sql);
@@ -24,11 +23,7 @@ public class LoginDAO {
 			this.rs = pst.executeQuery();
 			while(rs.next())
 			{
-				this.model.setId(rs.getInt("id"));
-				this.model.setEmail(rs.getString("nome"));
-				this.model.setSenha(rs.getString("senha"));
-				
-				if(modelLogin.getEmail().equals(this.model.getEmail()) && modelLogin.getSenha().equals(this.model.getSenha()))
+				if(modelLogin.getEmail().equals(rs.getString("email")) && modelLogin.getSenha().equals(rs.getString("senha")))
 				{
 					return true;
 				}

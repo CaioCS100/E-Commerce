@@ -26,7 +26,12 @@
 			<b:dataTableColumn value="#{funcionario.cpf}" />
 			<b:dataTableColumn value="#{funcionario.cep}" />
 			<b:dataTableColumn value="#{funcionario.telefone}" />
-			<b:dataTableColumn value="#{funcionario.dataNascimento}" />
+			<h:column>
+				<f:facet name="header">Data Nascimento</f:facet>
+				<h:outputText value="#{funcionario.dataNascimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
 			<b:dataTableColumn value="#{funcionario.email}" />
 			<b:dataTableColumn value="#{funcionario.cargo}" />
 			<b:dataTableColumn value="#{funcionario.qtdHoras}" />
@@ -37,9 +42,8 @@
 					action="#{controleFuncionario.carregarDadosParaEditarFuncionario(funcionario)}">
 				</b:commandButton>
 
-				<b:commandButton class="fa fa-trash botaoTabela"
-					tooltip="Excluir" tooltip-position="top" ajax="true"
-					update=":formFuncionario"
+				<b:commandButton class="fa fa-trash botaoTabela" tooltip="Excluir"
+					tooltip-position="top" ajax="true" update=":formFuncionario"
 					action="#{controleFuncionario.deletarFuncionario(funcionario)}">
 				</b:commandButton>
 			</b:dataTableColumn>
@@ -60,8 +64,8 @@
 					</b:row>
 				</b:container>
 				<b:commandButton type="submit" ajax="true"
-					action="#{controleFuncionario.editarFuncionario()}" value="Editar" 
-					update=":formFuncionario"/>
+					action="#{controleFuncionario.editarFuncionario()}" value="Editar"
+					update=":formFuncionario" />
 			</div>
 		</h:form>
 	</b:modal>

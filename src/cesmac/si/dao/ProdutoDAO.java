@@ -7,32 +7,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cesmac.si.connection.ConnectionFactory;
+import cesmac.si.controller.ProdutoController;
+
 
 
 public class ProdutoDAO {
-	public String Insert(String nome,String preco,String descricao,int quantidade,String tipo) throws SQLException, ClassNotFoundException{ 
+	public String Insert(String nome,float preco,String descricao,int quantidade,String tipo) throws SQLException, ClassNotFoundException{ 
 		
-		Conexao CF = new Conexao();
-		Connection connection=CF.getConnection();
+		Connection CF = ConnectionFactory.getConnection();
 		
+		int id=0;
 		String status="";
-	    String sql="INSERT INTO Produto(nome,preco,descricao,quantidade) VALUES(?,?,?,?)";
+	    String sql="INSERT INTO produto(nome,preco,descricao,quantidadeNoEstoque,tipo) "
+	    		+ "VALUES(?,?,?,?,?) RETURNING id";//https://www.dbrnd.com/2015/11/postgresql-select-last-inserted-id-or-sequence-value/
 
 		try {
 
-			PreparedStatement ps = connection.prepareStatement(sql);
+			PreparedStatement ps = CF.prepareStatement(sql);
 	        ps.setString(1,nome);
-	        ps.setString(2,preco);
+	        ps.setFloat(2,preco);
 	        ps.setString(3,descricao);
 	        ps.setInt(4,quantidade);
 			ps.setString(5,tipo);
-	        ps.execute();
+	        ResultSet RS=ps.executeQuery();
+	        
+	        while(RS.next()) {
+	        	id=RS.getInt("id");
+	        }
 
-			status="Cadastro realizado com sucesso";
+			status="Cadastro realizado com sucesso de produto de nome:"+nome+"(de ID:"+id+")";
 
 		} catch (SQLException e) {
 
-            status="Banco com erro ou inativo";
+            status=e.toString();
 			
         }
 	    
@@ -43,7 +51,7 @@ public class ProdutoDAO {
 		
 		ResultSet RS=null;
 		
-		Conexao CF = new Conexao();
+		ConnectionFactory CF = new ConnectionFactory();
 		Connection connection=CF.getConnection();
 		
 	    if(tipoDeCondicao.equals("id")){
@@ -65,41 +73,63 @@ public class ProdutoDAO {
 	        if(tipos!=null){//se usuario selecionou "tipos"
 
 	                for(int i=0;i<tipos.size();i++){
-	                sql+="SELECT * FROM produto WHERE nomeProduto ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
+	                sql+="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
 	                    if(i!=tipos.size()){//Quando for o ultimo nao adicionara union
 	                        sql+=" UNION ";
 	                    }
 	                }
 	                
-	            PreparedStatement ps = connection.prepareStatement(sql);
+	             PreparedStatement ps = connection.prepareStatement(sql);
 	             RS=ps.executeQuery();
 	            
 
 	        }else{
-	            sql="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"%";
+	            sql="SELECT * FROM produto WHERE nomeProduto ILIKE %"+condicao+"%";
 	            PreparedStatement ps = connection.prepareStatement(sql);
 	             RS=ps.executeQuery();
 	            
 	        }
 
 	    }
-	    List <Produto> Objetos=new ArrayList <Produto> ();
+	    List <ProdutoController> Objetos=new ArrayList <ProdutoController> ();
 		while(RS.next()){
+			ProdutoController produto = new ProdutoController();
+			produto.setNome(RS.getString("nome"));
 			
-			
-			Objetos.add(new Produto(RS.getString("nome")));
+			Objetos.add(produto);
+//			Objetos.add(new Produto(RS.getString("nome")));
 		}
 		return Objetos;
+	}
+	public void ListarProduto(int id) throws SQLException, ClassNotFoundException{
+		ConnectionFactory CF = new ConnectionFactory();
+		Connection connection=CF.getConnection();
+		
+		String sql="SELECT * FROM produto WHERE id=?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1,id);
+			ResultSet RS=ps.executeQuery();
+			while(RS.next()){
+				/*new Produto(
+				 * 		RS.getInt("id"),
+						RS.getString("nome"),
+						RS.getString("descricao"),
+						RS.getString("tipo"),
+						RS.getFloat("preco"),
+						RS.getInt("quantidadeNoEstoque"),
+						RS.getInt("quantidadeConsideradaBaixa"));
+				*/
+			}
 	}
 	public String Update(int id,String nome,String preco,String descricao,int quantidadeNoEstoque) throws SQLException, ClassNotFoundException{
 	    String status="";
 
-	    Conexao CF = new Conexao();
+	    ConnectionFactory CF = new ConnectionFactory();
 		Connection connection=CF.getConnection();
        
 	    try{
 
-			String sql="UPDATE Produto SET nome=?,preco=?,descricao=?,quantidadeNoEstoque=? WHERE id=?";
+			String sql="UPDATE produto SET nome=?,preco=?,descricao=?,quantidadeNoEstoque=? WHERE id=?";
 				PreparedStatement ps = connection.prepareStatement(sql);
 					ps.setString(1,nome);
 					ps.setString(2,preco);
@@ -112,7 +142,7 @@ public class ProdutoDAO {
 
 		} catch (SQLException e) {
 
-            status="Banco com erro ou inativo";
+            status="Banco com erro ou inativo:"+e;
 			
         }
 			
@@ -123,24 +153,30 @@ public class ProdutoDAO {
 	}
 	public String Remove(int id) throws ClassNotFoundException{
 		
-		Conexao CF = new Conexao();
+		ConnectionFactory CF = new ConnectionFactory();
 		Connection connection=CF.getConnection();
 		
 		return null;
 
 	}
 	
-	public List<Produto> t(){
-		List <Produto> Guardar = new ArrayList<Produto>();
-		Guardar.add(new Produto("Ian"));
+	public List<ProdutoController> t(){
+		List <ProdutoController> Guardar = new ArrayList<ProdutoController>();
 		
-		Guardar.add(new Produto("Jorge"));
+		ProdutoController produto = new ProdutoController(1,"Ian","","",1,1,1);
+//		Guardar.add(new ProdutoController(1,"Ian","","",1,1,1));
+		Guardar.add(produto);
+		produto = new ProdutoController(1,"Jorge","","",1,1,1);
 		
-		System.out.print(Guardar.get(0).nome);
-		System.out.print(Guardar.get(1).nome);
+//		Guardar.add(new ProdutoController(1,"Jorge","","",1,1,1));
+		Guardar.add(produto);
+		
+		System.out.println(Guardar.get(0).getNome());
+		System.out.println(Guardar.get(1).getNome());
 		return Guardar;
 		
 	}
+	
 	/*public ArrayList VerificarEstoque(){
 	    String sql="SELECT * FROM produto";
 	    ArrayList Aviso=new ArrayList();     
@@ -163,10 +199,10 @@ public class ProdutoDAO {
 	-produto
 	id
 	nome VARCHAR
-	descriÃ§ao VARCHAR
+	descricao VARCHAR
 	tipo VARCHAR
 	//subtipo VARCHAR
-	preÃ§o FLOAT
+	preco FLOAT
 	quantidadeNoEstoque INT
 	quantidadeConsideradaBaixa INT
 
@@ -179,5 +215,29 @@ public class ProdutoDAO {
 	id_venda
 	id_produto
 	quantidadeComprada
+	
+	CREATE TABLE produto(
+		 id serial PRIMARY KEY,
+		 nome VARCHAR (50),
+		 descricao VARCHAR (50),
+		 tipo VARCHAR (50),
+		 preco float(20),
+		 quantidadeNoEstoque INTEGER,
+		 quantidadeConsideradaBaixa INTEGER,
+		 created_on TIMESTAMP
+	);
+	CREATE TABLE venda(
+		 id serial PRIMARY KEY,
+		 id_produto references produto(id),
+		 id_cliente references cliente(id),
+		 dataDeCompra date
+	);
+	CREATE TABLE venda_produto(
+		 id serial PRIMARY KEY,
+		 id_venda references venda(id),
+		 id_produto references produto(id),
+		 quantidadeComprada INTEGER
+	);
+	
 */
 }

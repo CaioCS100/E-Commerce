@@ -16,7 +16,7 @@
 	<p:messages id="messages" showDetail="true" closable="true">
 		<p:autoUpdate />
 	</p:messages>
-	<h:form enctype="multipart/form-data">
+	<h:form enctype="multipart/form-data" id="cadastroFunc">
 		<div id="tamanhoForm">
 		<div id="ui-header">
 			<b:container fluid="true">
@@ -28,8 +28,8 @@
 					</b:column>
 				</b:row>
 			</b:container>
-			<b:commandButton type="submit"
-					action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" />
+			<b:commandButton type="submit" ajax="true"  
+					action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" update="cadastroFunc"/>
 		</div>
 		</div>
 	</h:form>

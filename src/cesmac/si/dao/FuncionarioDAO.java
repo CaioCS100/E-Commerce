@@ -21,7 +21,7 @@ public class FuncionarioDAO {
 
 	public Boolean cadastrarFuncionario(Funcionario model) {
 		String sql = "insert into funcionarios(nome, cpf, cep, data_de_nascimento, telefone, ddd, email,"
-				+ " endereco, cidade, bairro, uf, cargo, quantidade_hora, salario, ativo)" + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " endereco, cidade, bairro, uf, cargo, quantidade_hora, salario)" + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		this.conn = ConnectionFactory.getConnection();
 		try 
 		{
@@ -40,7 +40,6 @@ public class FuncionarioDAO {
 			this.pst.setString(12, model.getCargo());
 			this.pst.setInt(13, model.getQtdHoras());
 			this.pst.setDouble(14, model.getSalario());
-			this.pst.setBoolean(15, true);
 			this.pst.executeUpdate();
 			this.conn.commit();
 			return true;

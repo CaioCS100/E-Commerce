@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 
 import cesmac.si.dao.ClienteDAO;
-import cesmac.si.model.Funcionario;
 import cesmac.si.model.Pessoa;
 
 @ManagedBean

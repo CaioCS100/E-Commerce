@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Login</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
 </h:head>
 <h:body>
-	<h:form>
-		<b:inputText placeholder="Email" required="true" label="Email:" colMd="10" labelColMd="2"
-			value="#{loginController.model.email}" >
+	<p:messages id="messages" showDetail="true" closable="true">
+		<p:autoUpdate />
+	</p:messages>
+	<h:form id="login">
+		<b:inputText placeholder="Email" required="true" label="Email:"
+			colMd="10" labelColMd="2" value="#{loginController.model.email}">
 			<f:facet name="prepend">
 				<b:icon name="user" />
 			</f:facet>
 		</b:inputText>
 
-		<b:inputText placeholder="Senha" label="Senha:" colMd="10" labelColMd="2"
-			value="#{loginController.model.senha}">
+		<b:inputSecret placeholder="Senha" label="Senha:" required="true" colMd="10"
+			labelColMd="2" value="#{loginController.model.senha}">
 			<f:facet name="prepend">
 				<b:iconAwesome name="key" />
 			</f:facet>
-		</b:inputText>
-		<b:commandButton value="Logar" type="submit" action="#{loginController.fazerLogin()}" />
+		</b:inputSecret>
+		<b:commandButton value="Logar" type="submit" ajax="true" update=":login"
+			action="#{loginController.fazerLogin()}" />
 	</h:form>
 </h:body>
 </html>

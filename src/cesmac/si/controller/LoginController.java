@@ -1,6 +1,8 @@
 package cesmac.si.controller;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import cesmac.si.dao.LoginDAO;
 import cesmac.si.model.Pessoa;
@@ -18,8 +20,12 @@ public class LoginController {
 			return "CadastroFuncionario?faces-redirect=true";
 		}
 		
-		return "Template?faces-redirect=true";
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Login ou Senha erradas!"));
+		model.setSenha("");
+		return "";
 	}
+	
 
 	public Pessoa getModel() {
 		return model;

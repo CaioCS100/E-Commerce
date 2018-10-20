@@ -11,8 +11,8 @@ public class ConnectionFactory {
     
     private static final String URL = "jdbc:postgresql://localhost:5432/ecommerce";
     private static final String USER = "postgres";
-//  private static final String PASS = "post";
-    private static final String PASS = "postgress";
+  private static final String PASS = "post";
+//    private static final String PASS = "postgress";
 
 	public static Connection getConnection() {
 
