@@ -9,3 +9,43 @@
 	
 	width: 80%;
 }
+
+.ui-fileupload-content .ui-progressbar {
+    width: 0px;
+    height: 0px;
+    margin: 0;
+    top: 5px;
+}
+
+.ui-fileupload-row>div {
+    display: inline-block;
+    padding: 1px 5px;
+}
+
+.ui-fileupload-files{
+		display: flex !important;
+		justify-content: center;
+}
+
+.ui-fileupload ui-widget ui-fileupload-responsive{
+	    width: 90%;
+}
+
+.ui-fileupload-progress{
+	visibility: hidden;
+}
+
+@media screen and (width: 1024px) {
+	.ui-fileupload-row>div, .ui-fileupload-files {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+	}
+}
+
+@media screen and (max-width: 425px) {
+	.ui-fileupload-row>div {
+    display: block;
+    padding: 1px 5px;
+	}
+}

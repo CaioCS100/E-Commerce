@@ -8,51 +8,57 @@
 	<div id="container">
 		<b:column medium-screen="4" col-md="6">
 			<b:inputText id="nome" label="Nome:"
-				value="#{controleFuncionario.model.nome}" />
+				value="#{controleFuncionario.model.nome}" readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:inputText id="cpf" label="CPF:"
-				value="#{controleFuncionario.model.cpf}" mask="###.###.###-##" />
+				value="#{controleFuncionario.model.cpf}" mask="###.###.###-##" readonly="#{controleFuncionario.modificarCampos}" />
 
 			<b:inputText id="cep" value="#{controleFuncionario.model.cep}"
-				label="CEP:" mask="#####-###" />
+				label="CEP:" mask="#####-###" readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:dateTimePicker label="Data de Nascimento:" showTime="false"
 				showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
-				required="true" value="#{controleFuncionario.model.dataNascimento}" />
+				required="true" value="#{controleFuncionario.model.dataNascimento}"  readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:inputText id="telefone"
 				value="#{controleFuncionario.model.telefone}" label="Telefone:"
-				mask="(##) #####-####" />
+				mask="(##) #####-####" readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:inputText type="email" id="email"
-				value="#{controleFuncionario.model.email}" label="Email:" />
+				value="#{controleFuncionario.model.email}" label="Email:" readonly="#{controleFuncionario.modificarCampos}" />
 
 			<b:inputText id="endereco"
-				value="#{controleFuncionario.model.endereco}" label="Endereço:" />
+				value="#{controleFuncionario.model.endereco}" label="Endereço:" readonly="#{controleFuncionario.modificarCampos}"/>
 
 		</b:column>
 		<b:column medium-screen="4" col-md="6">
 
 			<b:inputText id="bairro" value="#{controleFuncionario.model.bairro}"
-				label="Bairro:" />
+				label="Bairro:"  readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:inputText id="cidade" value="#{controleFuncionario.model.cidade}"
-				label="Cidade:" />
+				label="Cidade:"  readonly="#{controleFuncionario.modificarCampos}"/>
 
-			<b:selectOneMenu label="UF:" value="#{controleFuncionario.model.uf}">
+			<b:selectOneMenu label="UF:" value="#{controleFuncionario.model.uf}" readonly="#{controleFuncionario.modificarCampos}">
 				<f:selectItem itemLabel="Selecione uma UF" />
-				<f:selectItems value="#{utilitarios.listaUfs}" />
+				<f:selectItems value="#{utilitarios.listaUfs}"/>
 			</b:selectOneMenu>
 
 			<b:inputText id="cargo" value="#{controleFuncionario.model.cargo}"
-				label="Cargo:" />
+				label="Cargo:" readonly="#{controleFuncionario.modificarCampos}" />
 
 			<b:inputText id="qtdHoras"
 				value="#{controleFuncionario.model.qtdHoras}"
-				label="Quantidade de horas:" />
+				label="Quantidade de horas:"  readonly="#{controleFuncionario.modificarCampos}"/>
 
 			<b:inputText id="salario"
-				value="#{controleFuncionario.model.salario}" label="Salário:" />
+				value="#{controleFuncionario.model.salario}" label="Salário:"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<p:fileUpload
+				fileUploadListener="#{controleFuncionario.carregarImagem}" sizeLimit="5242880" rendered="#{controleFuncionario.uploadImagem}"
+				mode="advanced" allowTypes="/(\.|\/)(jpe?g|png)$/" invalidFileMessage="Arquivo inválido"
+				label="Procurar Imagem" uploadLabel="Enviar Imagem" invalidSizeMessage="Tamanho do arquivo é muito grande"
+				cancelLabel="Cancelar" fileLimit="1"  fileLimitMessage="Esse campo só pode conter uma imagem"/>
 		</b:column>
 	</div>
 </h:body>

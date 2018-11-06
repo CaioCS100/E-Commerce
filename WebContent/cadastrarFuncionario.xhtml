@@ -23,11 +23,12 @@
 				<b:row>
 					<b:column>
 						<ui:insert name="header">
-							<ui:include src="CamposFuncionario.xhtml" />
+							<ui:include src="camposFuncionario.xhtml" />
 						</ui:insert>
 					</b:column>
 				</b:row>
 			</b:container>
+			
 			<b:commandButton type="submit" ajax="true"  
 					action="#{controleFuncionario.salvarFuncionario()}" value="Salvar" update="cadastroFunc"/>
 		</div>

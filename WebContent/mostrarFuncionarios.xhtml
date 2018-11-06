@@ -36,6 +36,12 @@
 			<b:dataTableColumn value="#{funcionario.cargo}" />
 			<b:dataTableColumn value="#{funcionario.qtdHoras}" />
 			<b:dataTableColumn label="Ações">
+				<b:commandButton class="fa fa-eye botaoTabela" tooltip="Visualizar"
+					tooltip-position="top" process="@this" ajax="true"
+					update=":modalVisualizar"
+					action="#{controleFuncionario.carregarDadosParaVisualizarFuncionario(funcionario)}">
+				</b:commandButton>
+
 				<b:commandButton icon="edit" styleClass="botaoTabela"
 					tooltip="Editar" tooltip-position="top" process="@this" ajax="true"
 					update=":modalEditar"
@@ -58,17 +64,45 @@
 					<b:row>
 						<b:column>
 							<ui:insert name="header">
-								<ui:include src="CamposFuncionario.xhtml" />
+								<ui:include src="camposFuncionario.xhtml" />
 							</ui:insert>
 						</b:column>
 					</b:row>
 				</b:container>
 				<b:commandButton type="submit" ajax="true"
 					action="#{controleFuncionario.editarFuncionario()}" value="Editar"
-					update=":formFuncionario" />
+					update=":formFuncionario" styleClass="botao" />
+				<b:button value="Fechar" dismiss="modal" styleClass="botao" />
 			</div>
 		</h:form>
 	</b:modal>
+
+	<b:modal title="Visualizar Funcionário" styleClass="modalPseudoClass"
+		id="visualizar">
+		<h:form id="modalVisualizar">
+			<div id="ui-header">
+				<b:container fluid="true">
+					<b:row>
+						<b:column>
+							<ui:insert name="header">
+								<ui:include src="camposFuncionario.xhtml" />
+							</ui:insert>
+						</b:column>
+					</b:row>
+				</b:container>
+				<p:panel style="text-align: center;" layout="block" id="painel" rendered="#{controleFuncionario.modificarCampos}">
+					<p:graphicImage id="image" height="200" width="200" value="#{controleFuncionario.imageFromDB}"
+						style="border: 3px solid #DDD;" />
+				</p:panel>
+				
+				
+				<b:button value="Fechar" dismiss="modal" styleClass="fechar" />
+				<b:commandButton value="teste" styleClass="fechar" ajax="true"
+					 />
+			</div>
+		</h:form>
+	</b:modal>
+
 
 </h:body>
 </html>

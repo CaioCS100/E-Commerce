@@ -16,7 +16,7 @@ public class Pessoa {
 	private String bairro;
 	private String cidade;
 	private String uf;
-	private Byte[] foto;
+	private byte[] imagem;
 	private String senha;
 	private String complemento;
 	
@@ -68,11 +68,12 @@ public class Pessoa {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	public Byte[] getFoto() {
-		return foto;
+	
+	public byte[] getImagem() {
+		return imagem;
 	}
-	public void setFoto(Byte[] foto) {
-		this.foto = foto;
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
 	}
 	public String getCpf() {
 		return cpf;

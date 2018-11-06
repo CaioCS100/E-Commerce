@@ -17,7 +17,7 @@ public class LoginController {
 	{
 		if(this.dao.autenticarLogin(model))
 		{
-			return "CadastroFuncionario?faces-redirect=true";
+			return "cadastrarFuncionario?faces-redirect=true";
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null,
