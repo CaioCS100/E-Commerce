@@ -73,8 +73,10 @@ public class FuncionarioController {
 			if(event.getFile().getInputstream() != null)
 			{
 				InputStream input = event.getFile().getInputstream();
+				this.model.setExtensaoImagem(event.getFile().getContentType());
 				
-				boolean isPng = event.getFile().getFileName().endsWith("png");
+				boolean isPng = this.model.getExtensaoImagem().endsWith("png");
+				
 				BufferedImage imageBuffer = ImageIO.read(input);
 				int type = BufferedImage.TYPE_INT_RGB;
 				if(isPng)
@@ -99,12 +101,7 @@ public class FuncionarioController {
 		        bytesImgem.close();
 		        
 		        this.model.setImagem(byteArray);
-			}
-//			else
-//			{
-//				this.model.setImagem(null);
-//			}
-			
+			}			
 	        
         } catch (IOException e) {
 			e.printStackTrace();
@@ -130,12 +127,19 @@ public class FuncionarioController {
 	
 	public void editarFuncionario()
 	{
-		String[] telefoneDDD = this.controleUtilitario.retirarMascaraTelefone(this.model.getTelefone());
-		this.model.setCpf(this.controleUtilitario.retirarMascara(this.model.getCpf()));
-		this.model.setCep(this.controleUtilitario.retirarMascara(this.model.getCep()));
-		this.model.setDdd(telefoneDDD[0]);
-		this.model.setTelefone(telefoneDDD[1]);
-		if (dao.editarFuncionario(model)) 
+		String[] telefoneDDD = this.controleUtilitario.retirarMascaraTelefone(this.modelParaEditarEVisualizar.getTelefone());
+		this.modelParaEditarEVisualizar.setCpf(this.controleUtilitario.retirarMascara(this.modelParaEditarEVisualizar.getCpf()));
+		this.modelParaEditarEVisualizar.setCep(this.controleUtilitario.retirarMascara(this.modelParaEditarEVisualizar.getCep()));
+		this.modelParaEditarEVisualizar.setDdd(telefoneDDD[0]);
+		this.modelParaEditarEVisualizar.setTelefone(telefoneDDD[1]);
+		// aqui verifica se o usuario mudou a foto na hora de editar um funcionario
+		if(this.model.getImagem() != null)
+		{
+			this.modelParaEditarEVisualizar.setImagem(model.getImagem());
+			this.modelParaEditarEVisualizar.setExtensaoImagem(model.getExtensaoImagem());
+		}
+		
+		if (dao.editarFuncionario(modelParaEditarEVisualizar)) 
 		{
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionário Editado com sucesso"));
@@ -154,15 +158,12 @@ public class FuncionarioController {
 		StreamedContent streamedContent = null;
 		
 		if (this.modelParaEditarEVisualizar.getImagem() == null) {
-			System.out.println("entrou aqui");
 			FacesContext context = FacesContext.getCurrentInstance();
 			inputStream = context.getExternalContext().getResourceAsStream("/imgs/no-image.png");
 			streamedContent = new DefaultStreamedContent(inputStream, "image/png");
-//			return new DefaultStreamedContent();
 		} else {
 			inputStream = new ByteArrayInputStream(this.modelParaEditarEVisualizar.getImagem());
-			streamedContent = new DefaultStreamedContent(inputStream, "image/jpeg");
-//			return new DefaultStreamedContent(new ByteArrayInputStream(this.model.getImagem()),"image/png");
+			streamedContent = new DefaultStreamedContent(inputStream, this.modelParaEditarEVisualizar.getExtensaoImagem());
 		}
 		
 		return streamedContent;
@@ -183,7 +184,6 @@ public class FuncionarioController {
 		}
 		
 	}
-	
 
 	public List<Funcionario> getListaFuncionario() {
 		return this.listaFuncionario;

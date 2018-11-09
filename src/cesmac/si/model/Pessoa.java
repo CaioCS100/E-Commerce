@@ -19,6 +19,7 @@ public class Pessoa {
 	private byte[] imagem;
 	private String senha;
 	private String complemento;
+	private String extensaoImagem;
 	
 	public int getId() {
 		return id;
@@ -111,6 +112,12 @@ public class Pessoa {
 	}
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+	public String getExtensaoImagem() {
+		return extensaoImagem;
+	}
+	public void setExtensaoImagem(String extensaoImagem) {
+		this.extensaoImagem = extensaoImagem;
 	}
 	
 }

@@ -21,7 +21,7 @@ public class FuncionarioDAO {
 
 	public Boolean cadastrarFuncionario(Funcionario model) {
 		String sql = "insert into funcionarios(nome, cpf, cep, data_de_nascimento, telefone, ddd, email,"
-				+ " endereco, cidade, bairro, uf, cargo, quantidade_hora, salario, foto)" + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " endereco, cidade, bairro, uf, cargo, quantidade_hora, salario, foto, ext_imagem)" + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		this.conn = ConnectionFactory.getConnection();
 		try 
 		{
@@ -41,6 +41,7 @@ public class FuncionarioDAO {
 			this.pst.setInt(13, model.getQtdHoras());
 			this.pst.setDouble(14, model.getSalario());
 			this.pst.setBytes(15, model.getImagem());
+			this.pst.setString(16, model.getExtensaoImagem());
 			this.pst.executeUpdate();
 			this.conn.commit();
 			return true;
@@ -86,6 +87,7 @@ public class FuncionarioDAO {
 				this.modelFuncionario.setQtdHoras(this.rs.getInt("quantidade_hora"));
 				this.modelFuncionario.setSalario(this.rs.getDouble("salario"));
 				this.modelFuncionario.setImagem(this.rs.getBytes("foto"));
+				this.modelFuncionario.setExtensaoImagem(this.rs.getString("ext_imagem"));
 				
 				arrayFuncionario.add(this.modelFuncionario);
 			}
@@ -107,9 +109,17 @@ public class FuncionarioDAO {
 	public Boolean editarFuncionario(Funcionario funcionario)
 	{
 		this.conn = ConnectionFactory.getConnection();
+		String sqlFoto = "";
+		
+		if(funcionario.getImagem() != null)
+		{
+			sqlFoto = ", foto = ?, ext_imagem = ?";
+		}
+		
 		String sql = "update funcionarios set nome = ?, cpf = ?, cep = ?, data_de_nascimento = ?, telefone = ?, ddd = ?, email = ?, "
-				+ "endereco = ?, cidade = ?, bairro = ?, uf = ?, cargo = ?, quantidade_hora = ?, salario = ?"
-				+ "where id = ?";
+				+ "endereco = ?, cidade = ?, bairro = ?, uf = ?, cargo = ?, quantidade_hora = ?, salario = ?" 
+				+ sqlFoto
+				+ " where id = ?";
 		try {
 			this.pst = this.conn.prepareStatement(sql);
 			this.pst.setString(1, funcionario.getNome());
@@ -126,7 +136,17 @@ public class FuncionarioDAO {
 			this.pst.setString(12, funcionario.getCargo());
 			this.pst.setInt(13, funcionario.getQtdHoras());
 			this.pst.setDouble(14, funcionario.getSalario());
-			this.pst.setInt(15, funcionario.getId());
+			if(funcionario.getImagem() == null)
+			{
+				this.pst.setInt(15, funcionario.getId());
+			}
+			else
+			{
+				this.pst.setBytes(15, funcionario.getImagem());
+				this.pst.setString(16, funcionario.getExtensaoImagem());
+				this.pst.setInt(17, funcionario.getId());
+			}
+			
 			this.pst.executeUpdate();
 			this.conn.commit();
 			return true;
