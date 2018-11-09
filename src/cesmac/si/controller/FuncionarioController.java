@@ -31,17 +31,22 @@ import cesmac.si.model.Funcionario;
 public class FuncionarioController {
 	
 	private Funcionario model;
+	private Funcionario modelParaEditarEVisualizar;
 	private FuncionarioDAO dao;
 	private final UtilitariosController controleUtilitario = new UtilitariosController();
 	private List<Funcionario> listaFuncionario;
 	private PrimeFaces context = PrimeFaces.current(); // item necessario para poder usar js no backend
     private boolean uploadImagem = true; 
-    private boolean modificarCampos = false; //Se for true, o usuário vai poder alterar os campos se for false ele só vai poder visualiza-los
+    private boolean modificarCampos = false; //Se for true, o usuário só vai poder visualiza-los se for false ele vai poder alterar os campos. 
 
 	@PostConstruct
 	public void init() {
 		this.model = new Funcionario();
 		this.dao = new FuncionarioDAO();
+	}
+	
+	public void carregarTabelaFuncionarios()
+	{
 		this.listaFuncionario = this.dao.listarTodosFuncionarios();
 	}
 	
@@ -61,16 +66,62 @@ public class FuncionarioController {
 		}
 		
 	}
+	
+	public void carregarImagem(FileUploadEvent event) {
+		
+		try {
+			if(event.getFile().getInputstream() != null)
+			{
+				InputStream input = event.getFile().getInputstream();
+				
+				boolean isPng = event.getFile().getFileName().endsWith("png");
+				BufferedImage imageBuffer = ImageIO.read(input);
+				int type = BufferedImage.TYPE_INT_RGB;
+				if(isPng)
+		        {
+		            type = BufferedImage.BITMASK;
+		        }
+				BufferedImage redimensionarImagem = new BufferedImage(200, 200, type);
+				Graphics2D graphics2D = redimensionarImagem.createGraphics();
+		        graphics2D.setComposite(AlphaComposite.Src);
+		        graphics2D.drawImage(imageBuffer, 0, 0, 200, 200, null);
+		        ByteArrayOutputStream bytesImgem = new ByteArrayOutputStream();
+		        if(isPng)
+		        {
+		        	ImageIO.write(redimensionarImagem,"png", bytesImgem);
+		        }
+		        else
+		        {
+		            ImageIO.write(redimensionarImagem,"jpg", bytesImgem);
+		        }
+		        bytesImgem.flush();
+		        byte[] byteArray = bytesImgem.toByteArray();
+		        bytesImgem.close();
+		        
+		        this.model.setImagem(byteArray);
+			}
+//			else
+//			{
+//				this.model.setImagem(null);
+//			}
+			
+	        
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void carregarDadosParaEditarFuncionario(Funcionario funcionario) {
-		this.model = funcionario;
+		this.modelParaEditarEVisualizar = funcionario;
 		this.context.executeScript("$('#modal').modal('show')");
+		this.uploadImagem = true;
+		this.modificarCampos = false;
 	}
 	
 	public void carregarDadosParaVisualizarFuncionario(Funcionario funcionario)
 	{
-//			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("funcionario", funcionario);
-			this.model = funcionario;
+			this.modelParaEditarEVisualizar = funcionario;
 			this.uploadImagem = false;
 			this.modificarCampos = true;
 			this.context.executeScript("$('#visualizar').modal('show')");
@@ -98,20 +149,23 @@ public class FuncionarioController {
 	}
 	
 	public StreamedContent getImageFromDB() {
- 
-		if (this.model.getImagem() == null) {
-			System.out.println("entrou no null \n blah");
-			return new DefaultStreamedContent();
+		
+		InputStream inputStream = null;
+		StreamedContent streamedContent = null;
+		
+		if (this.modelParaEditarEVisualizar.getImagem() == null) {
+			System.out.println("entrou aqui");
+			FacesContext context = FacesContext.getCurrentInstance();
+			inputStream = context.getExternalContext().getResourceAsStream("/imgs/no-image.png");
+			streamedContent = new DefaultStreamedContent(inputStream, "image/png");
+//			return new DefaultStreamedContent();
 		} else {
-			System.out.println("entrou no else ahsudhasuid");
-			InputStream inputStream = new ByteArrayInputStream(this.model.getImagem());
-			StreamedContent streamedContent = new DefaultStreamedContent(inputStream, "image/jpeg");
-			
-			return streamedContent;
- 
+			inputStream = new ByteArrayInputStream(this.modelParaEditarEVisualizar.getImagem());
+			streamedContent = new DefaultStreamedContent(inputStream, "image/jpeg");
 //			return new DefaultStreamedContent(new ByteArrayInputStream(this.model.getImagem()),"image/png");
- 
 		}
+		
+		return streamedContent;
 	}
 	
 	public void deletarFuncionario(Funcionario funcionario)
@@ -130,42 +184,6 @@ public class FuncionarioController {
 		
 	}
 	
-	public void carregarImagem(FileUploadEvent event) {
-		
-		try {
-			InputStream input = event.getFile().getInputstream();
-			
-			boolean isPng = event.getFile().getFileName().endsWith("png");
-			BufferedImage imageBuffer = ImageIO.read(input);
-			int type = BufferedImage.TYPE_INT_RGB;
-			if(isPng)
-	        {
-	            type = BufferedImage.BITMASK;
-	        }
-			BufferedImage redimensionarImagem = new BufferedImage(200, 200, type);
-			Graphics2D graphics2D = redimensionarImagem.createGraphics();
-	        graphics2D.setComposite(AlphaComposite.Src);
-	        graphics2D.drawImage(imageBuffer, 0, 0, 200, 200, null);
-	        ByteArrayOutputStream bytesImgem = new ByteArrayOutputStream();
-	        if(isPng)
-	        {
-	        	ImageIO.write(redimensionarImagem,"png", bytesImgem);
-	        }
-	        else
-	        {
-	            ImageIO.write(redimensionarImagem,"jpg", bytesImgem);
-	        }
-	        bytesImgem.flush();
-	        byte[] byteArray = bytesImgem.toByteArray();
-	        bytesImgem.close();
-	        
-	        this.model.setImagem(byteArray);
-	        
-        } catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	public List<Funcionario> getListaFuncionario() {
 		return this.listaFuncionario;
@@ -201,6 +219,14 @@ public class FuncionarioController {
 
 	public void setUploadImagem(boolean uploadImagem) {
 		this.uploadImagem = uploadImagem;
+	}
+
+	public Funcionario getModelParaEditarEVisualizar() {
+		return modelParaEditarEVisualizar;
+	}
+
+	public void setModelParaEditarEVisualizar(Funcionario modelParaEditarEVisualizar) {
+		this.modelParaEditarEVisualizar = modelParaEditarEVisualizar;
 	}
 	
 }

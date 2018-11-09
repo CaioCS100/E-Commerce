@@ -11,6 +11,9 @@
 		rel="stylesheet" />
 	<title>Listar Funcionarios</title>
 </h:head>
+<f:metadata>
+	<f:viewAction action="#{controleFuncionario.carregarTabelaFuncionarios}" />
+</f:metadata>
 <h:body>
 	<p:messages id="messages" showDetail="true" closable="true">
 		<p:autoUpdate />
@@ -64,7 +67,7 @@
 					<b:row>
 						<b:column>
 							<ui:insert name="header">
-								<ui:include src="camposFuncionario.xhtml" />
+								<ui:include src="/templates/modal/modalEditarEVisualizarFuncionario.xhtml" />
 							</ui:insert>
 						</b:column>
 					</b:row>
@@ -85,24 +88,15 @@
 					<b:row>
 						<b:column>
 							<ui:insert name="header">
-								<ui:include src="camposFuncionario.xhtml" />
+								<ui:include src="/templates/modal/modalEditarEVisualizarFuncionario.xhtml" />
 							</ui:insert>
 						</b:column>
 					</b:row>
 				</b:container>
-				<p:panel style="text-align: center;" layout="block" id="painel" rendered="#{controleFuncionario.modificarCampos}">
-					<p:graphicImage id="image" height="200" width="200" value="#{controleFuncionario.imageFromDB}"
-						style="border: 3px solid #DDD;" />
-				</p:panel>
-				
-				
 				<b:button value="Fechar" dismiss="modal" styleClass="fechar" />
-				<b:commandButton value="teste" styleClass="fechar" ajax="true"
-					 />
 			</div>
 		</h:form>
 	</b:modal>
-
 
 </h:body>
 </html>

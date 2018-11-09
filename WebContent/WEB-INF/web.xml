@@ -9,14 +9,6 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-  <servlet>
-  		<servlet-name>ImageServlet</servlet-name>
-        <servlet-class>cesmac.si.servlet.ImageServlet</servlet-class>
-    </servlet>
-  <servlet-mapping>
-        <servlet-name>ImageServlet</servlet-name>
-        <url-pattern>/image</url-pattern>
-    </servlet-mapping>
   <context-param>
     <param-name>
         javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE

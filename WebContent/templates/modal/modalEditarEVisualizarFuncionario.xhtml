@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+	<div id="container">
+		<b:column medium-screen="4" col-md="6">
+			<b:inputText id="nome" label="Nome:"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.nome}" readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:inputText id="cpf" label="CPF:"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.cpf}" mask="###.###.###-##" readonly="#{controleFuncionario.modificarCampos}" />
+
+			<b:inputText id="cep" value="#{controleFuncionario.modelParaEditarEVisualizar.cep}"
+				label="CEP:" mask="#####-###" readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:dateTimePicker label="Data de Nascimento:" showTime="false"
+				showButtonPanel="true" use-current="false" format="DD/MM/YYYY"
+				required="true" value="#{controleFuncionario.modelParaEditarEVisualizar.dataNascimento}"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:inputText id="telefone"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.telefone}" label="Telefone:"
+				mask="(##) #####-####" readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:inputText type="email" id="email"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.email}" label="Email:" readonly="#{controleFuncionario.modificarCampos}" />
+
+			<b:inputText id="endereco"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.endereco}" label="Endereço:" readonly="#{controleFuncionario.modificarCampos}"/>
+
+		</b:column>
+		<b:column medium-screen="4" col-md="6">
+
+			<b:inputText id="bairro" value="#{controleFuncionario.modelParaEditarEVisualizar.bairro}"
+				label="Bairro:"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:inputText id="cidade" value="#{controleFuncionario.modelParaEditarEVisualizar.cidade}"
+				label="Cidade:"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:selectOneMenu label="UF:" value="#{controleFuncionario.modelParaEditarEVisualizar.uf}" readonly="#{controleFuncionario.modificarCampos}">
+				<f:selectItem itemLabel="Selecione uma UF" />
+				<f:selectItems value="#{utilitarios.listaUfs}"/>
+			</b:selectOneMenu>
+
+			<b:inputText id="cargo" value="#{controleFuncionario.modelParaEditarEVisualizar.cargo}"
+				label="Cargo:" readonly="#{controleFuncionario.modificarCampos}" />
+
+			<b:inputText id="qtdHoras"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.qtdHoras}"
+				label="Quantidade de horas:"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<b:inputText id="salario"
+				value="#{controleFuncionario.modelParaEditarEVisualizar.salario}" label="Salário:"  readonly="#{controleFuncionario.modificarCampos}"/>
+
+			<p:fileUpload
+				fileUploadListener="#{controleFuncionario.carregarImagem}" sizeLimit="5242880" rendered="#{controleFuncionario.uploadImagem}"
+				mode="advanced" allowTypes="/(\.|\/)(jpe?g|png)$/" invalidFileMessage="Arquivo inválido"
+				label="Procurar Imagem" uploadLabel="Enviar Imagem" invalidSizeMessage="Tamanho do arquivo é muito grande"
+				cancelLabel="Cancelar" fileLimit="1"  fileLimitMessage="Esse campo só pode conter uma imagem"/>
+				
+			<p:graphicImage id="image" height="200" width="240" value="#{controleFuncionario.imageFromDB}" cache="false"
+					rendered="#{controleFuncionario.modificarCampos}"/>
+		</b:column>
+	</div>
+</h:body>
+</html>
