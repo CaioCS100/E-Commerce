@@ -108,8 +108,9 @@ public class FuncionarioController {
 		}
 
 	}
-
-	public void carregarDadosParaEditarFuncionario(Funcionario funcionario) {
+	
+	public void carregarDadosParaEditarFuncionario(Funcionario funcionario) 
+	{
 		this.modelParaEditarEVisualizar = funcionario;
 		this.context.executeScript("$('#modal').modal('show')");
 		this.uploadImagem = true;
@@ -150,6 +151,7 @@ public class FuncionarioController {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Editar o Funcionário"));
 		}
 		this.context.executeScript("$('#modal').modal('hide')");
+		carregarTabelaFuncionarios();
 	}
 	
 	public StreamedContent getImageFromDB() {

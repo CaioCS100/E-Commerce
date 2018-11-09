@@ -76,8 +76,7 @@ public class FuncionarioDAO {
 				this.modelFuncionario.setCpf(this.utilitarios.putMascara(this.rs.getString("cpf"), "###.###.###-##"));
 				this.modelFuncionario.setCep(this.utilitarios.putMascara(this.rs.getString("cep"), "#####-###"));
 				this.modelFuncionario.setDataNascimento(this.rs.getDate("data_de_nascimento"));
-				this.modelFuncionario.setTelefone(this.utilitarios.putMascara(""+this.rs.getString("telefone") 
-				+ ""+this.rs.getString("ddd"), "(##) #####-####"));
+				this.modelFuncionario.setTelefone(this.utilitarios.putMascara(""+this.rs.getString("ddd") + ""+this.rs.getString("telefone"), "(##) #####-####"));
 				this.modelFuncionario.setEmail(this.rs.getString("email"));
 				this.modelFuncionario.setEndereco(this.rs.getString("endereco"));
 				this.modelFuncionario.setCidade(this.rs.getString("cidade"));
