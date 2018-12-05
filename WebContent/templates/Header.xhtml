@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="StyleSheet" type="text/css" href="css/estiloTemplate.css" />
-<title>Template</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="StyleSheet" type="text/css" href="css/estiloTemplate.css" />
+	<title>Template</title>
 </h:head>
 <h:body>
-	<b:navBar brand="BuyExplore" fluid="true" id="header" brandHref="../Ecommerce/index.xhtml">
+	<b:navBar brand="BuyExplore" fluid="true" id="header"
+		brandHref="../Ecommerce/index.xhtml">
 		<b:navbarLinks>
 			<b:navLink value="Destaques" href="#"></b:navLink>
 			<b:navLink value="Promoção" href="#"></b:navLink>
@@ -41,8 +41,32 @@
 			<button type="submit" class="btn btn-default">Procurar</button>
 		</h:form>
 		<h:form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs">
-			<b:commandButton value="Fazer Login" type="submit" action="#" />
+			<b:commandButton value="Fazer Login" process="@this" ajax="true"
+				update=":modalLogin" action="#{loginController.abrirModal()}" />
 		</h:form>
 	</b:navBar>
+
+	<b:modal title="Login" styleClass="modalPseudoClass" id="login">
+		<h:form id="modalLogin">
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+			<b:inputText placeholder="Email" required="true" label="Email:"
+				colMd="10" labelColMd="2" value="#{loginController.model.email}">
+				<f:facet name="prepend">
+					<b:icon name="user" />
+				</f:facet>
+			</b:inputText>
+
+			<b:inputSecret placeholder="Senha" label="Senha:" required="true"
+				colMd="10" labelColMd="2" value="#{loginController.model.senha}">
+				<f:facet name="prepend">
+					<b:iconAwesome name="key" />
+				</f:facet>
+			</b:inputSecret>
+			<b:commandButton value="Logar" type="submit" ajax="true"
+				update=":modalLogin" action="#{loginController.fazerLogin()}" />
+		</h:form>
+	</b:modal>
 </h:body>
 </html>

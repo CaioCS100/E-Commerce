@@ -160,8 +160,8 @@ public class FuncionarioController {
 		StreamedContent streamedContent = null;
 		
 		if (this.modelParaEditarEVisualizar.getImagem() == null) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			inputStream = context.getExternalContext().getResourceAsStream("/imgs/no-image.png");
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			inputStream = facesContext.getExternalContext().getResourceAsStream("/imgs/no-image.png");
 			streamedContent = new DefaultStreamedContent(inputStream, "image/png");
 		} else {
 			inputStream = new ByteArrayInputStream(this.modelParaEditarEVisualizar.getImagem());
