@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputScript name="js/MeuJS.js" />
+	<!-- https://stackoverflow.com/questions/8367421/how-to-reference-css-js-image-resource-in-facelets-template -->
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<p:tooltip />
+
+	<h1>OI</h1>
+	<h:outputText value="#{prod.nome}" />
+	<p:dataTable var="pro" value="#{produto.lista}">
+		<p:column headerText="nome">
+			<h:outputText value="#{pro.nome}" />
+		</p:column>
+
+	</p:dataTable>
+	<h2> Cadastro bem-sucedid para produto de nome:
+		<h:outputText value="#{produto.nome}" />
+		(de ID: <h:outputText value="#{produto.id}" />)
+	</h2>
+
+
+	<script>
+     setTimeout(function(){
+   	   num = parseInt($("#counter").text());
+   	   num=num-1;
+   	    $("#counter").text(num);
+	},1000)
+	setTimeout(function(){
+   	   num = parseInt($("#counter").text());
+   	   num=num-1;
+   	    $("#counter").text(num);
+	},2000)
+	setTimeout(function(){
+   	   num = parseInt($("#counter").text());
+   	   num=num-1;
+   	    $("#counter").text(num);
+	},3000)
+	setTimeout(function(){
+   	   num = parseInt($("#counter").text());
+   	   num=num-1;
+   	    $("#counter").text(num);
+	},4000)
+	
+	setTimeout(function(){
+		alert("Redirecionar")
+		window.location.href="http://localhost:8081/Ecommerce/pesquisar.xhtml";
+	},5000)
+			
+
+        </script>
+
+</h:body>
+</html>
+

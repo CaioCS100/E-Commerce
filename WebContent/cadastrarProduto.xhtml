@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets" 
+ xmlns:h="http://java.sun.com/jsf/html" 
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+<title>Cadastro de Produto</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</h:head>
+<h:body>
+    <center>
+        <h:form>
+        <p:messages id="messages" showDetail="true" closable="true">
+       		 <p:autoUpdate />
+    	</p:messages>
+    		<b:column medium-screen="4" col-md="6" style="left:25%;width:50%">
+    		
+            		<b:inputText value="#{produtoController.produto.nome}" label="Nome:" id="inputNome" required="true"
+            		 requiredMessage="Campo nome nao tem nenhum valor"/>
+            		 
+          			<b:inputText value="#{produtoController.produto.descricao}" label="Descrição:" required="true"
+          			  requiredMessage="Campo descricao nao tem nenhum valor"/>
+          		
+            		<b:inputText value="#{produtoController.produto.tipo}" label="Categoria(Tipo):"/>
+            		
+			    	<b:inputText value="#{produtoController.produto.quantidadeNoEstoque}" label="Quantidade:"/>
+			    	
+			    	<b:inputText value="#{produtoController.produto.preco}" label="Preco:"/>
+			    	
+			    	<div id="Botao">
+			         <b:commandButton type="submit"
+					action="#{produtoController.cadastrarProduto()}" value="Salvar" />
+		            </div>
+			    
+            </b:column>
+        </h:form>
+    </center>
+   
+    
+
+</h:body>
+</html>

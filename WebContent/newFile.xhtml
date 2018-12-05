@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputScript name="js/MeuJS.js" />
+	<!-- https://stackoverflow.com/questions/8367421/how-to-reference-css-js-image-resource-in-facelets-template -->
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<p:tooltip />
+	<h:form>
+		<h:commandButton value="Show Message" type="submit"
+			action="#{produtoController.abrirPaginaAtualizar()}" />
+	</h:form>
+	<h1>OI</h1>
+	<h:outputText value="#{produto.nome}" />
+	<p:dataTable var="pro" value="#{produto.lista}">
+		<p:column headerText="nome">
+			<h:outputText value="#{produto.nome}" />
+		</p:column>
+
+	</p:dataTable>
+	<h2>Ajax Example</h2>
+	<h:form>
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		<h:inputText id="inputNome" value="#{produto.nome}" required="true"
+			requiredMessage="Campo nao tem nenhum valor" />
+
+		<div>
+			<h:commandButton value="Show Message" type="submit"
+				actionListener="#{ProdutoBean.ajaxTest()}">
+				<f:ajax execute="inputNome" render="outputMessage" />
+				<!-- id do metodo que ira ser executada -->
+			</h:commandButton>
+		</div>
+		<h:outputText id="outputMessage" value="#{ProdutoBean.ajaxTest()}" />
+		<div id="counter">5</div>
+
+		<!--https://stackoverflow.com/questions/2690461/jsf-2-0-ajax-jsf-ajax-request-to-
+call-method-not-only-rerender-an-area-of-page 
+https://www.tutorialspoint.com/jsf/jsf_ajax.htm 
+https://www.devmedia.com.br/utilizando-ajax-com-java-server-faces-jsf/24832 -->
+
+	</h:form>
+
+	<script>//$("#aviso").hide();Ola();
+      //$("#counter").val("OLA");
+      function Mostrar(){
+			if($("#outputMessage").val()=="ERRO"){
+				$("#avisoErro").show();
+			}else{
+				$("#avisoSucesso").show();
+			}
+			
+    	}
+      var num,i;
+   	   		/*for( i=0;5>i;i++){
+	   	   		setTimeout(function(){
+	  	    	   num = parseInt($("#counter").text());
+	  	    	   num=num-1;
+	  	    	    $("#counter").text(num);
+	  			},1000)
+   	   	    }*/
+   	   	setTimeout(function(){
+	    	   num = parseInt($("#counter").text());
+	    	   num=num-1;
+	    	    $("#counter").text(num);
+		},1000)
+		setTimeout(function(){
+	    	   num = parseInt($("#counter").text());
+	    	   num=num-1;
+	    	    $("#counter").text(num);
+		},2000)
+		setTimeout(function(){
+	    	   num = parseInt($("#counter").text());
+	    	   num=num-1;
+	    	    $("#counter").text(num);
+		},3000)
+		setTimeout(function(){
+	    	   num = parseInt($("#counter").text());
+	    	   num=num-1;
+	    	    $("#counter").text(num);
+		},4000)
+		setTimeout(function(){
+	    	   num = parseInt($("#counter").text());
+	    	   num=num-1;
+	    	    $("#counter").text(num);
+		},5000)
+    
+      </script>
+
+</h:body>
+</html>
+
