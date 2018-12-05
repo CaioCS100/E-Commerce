@@ -20,6 +20,7 @@ public class Pessoa {
 	private String senha;
 	private String complemento;
 	private String extensaoImagem;
+	private Boolean restrito;
 	
 	public int getId() {
 		return id;
@@ -118,6 +119,12 @@ public class Pessoa {
 	}
 	public void setExtensaoImagem(String extensaoImagem) {
 		this.extensaoImagem = extensaoImagem;
+	}
+	public Boolean getRestrito() {
+		return restrito;
+	}
+	public void setRestrito(Boolean restrito) {
+		this.restrito = restrito;
 	}
 	
 }
