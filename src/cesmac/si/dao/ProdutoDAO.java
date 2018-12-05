@@ -8,236 +8,149 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cesmac.si.connection.ConnectionFactory;
-import cesmac.si.controller.ProdutoController;
-
-
+import cesmac.si.model.Produto;
 
 public class ProdutoDAO {
-	public String Insert(String nome,float preco,String descricao,int quantidade,String tipo) throws SQLException, ClassNotFoundException{ 
+
+	Produto model = new Produto();
+	private PreparedStatement pst;
+	private Connection conn;
+	private ResultSet rs;
+
+	public boolean insert(Produto produto) 
+	{
+		this.conn = ConnectionFactory.getConnection();
+		boolean status;
+		String sql = "INSERT INTO produto(nome,preco,descricao,quantidadeNoEstoque,tipo) " + "VALUES(?,?,?,?,?)";
+
+		try {
+			this.pst = this.conn.prepareStatement(sql);
+			this.pst.setString(1, produto.getNome());
+			this.pst.setFloat(2, produto.getPreco());
+			this.pst.setString(3, produto.getDescricao());
+			this.pst.setInt(4, produto.getQuantidadeNoEstoque());
+			this.pst.setString(5, produto.getTipo());
+			this.pst.executeUpdate();
+			this.conn.commit();
+			status = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			status = false;
+		}
+
+		return status;
+	}
+
+	public List<Produto> select(Produto produto) throws SQLException 
+	{
+		String sql = "";
+		this.conn = ConnectionFactory.getConnection();
+		List<Produto> objetos = new ArrayList<Produto>();
+		if (produto.getTipoDeCondicao().equals("id")) 
+		{
+
+			int id = Integer.parseInt(produto.getCondicao());
+
+			sql = "SELECT * FROM produto WHERE id=?";
+
+			this.pst = this.conn.prepareStatement(sql);
+			this.pst.setInt(1, id);
+			this.rs = this.pst.executeQuery();
+
+		}
+		else if (produto.getTipoDeCondicao().equals("nome")) 
+		{
+			
+				sql = "SELECT * FROM produto WHERE nome ILIKE ?";
+				this.pst = this.conn.prepareStatement(sql);
+				this.pst.setString(1, "%" + produto.getCondicao() + "%");
+				this.rs = this.pst.executeQuery();
+		}
 		
-		Connection CF = ConnectionFactory.getConnection();
+		while (this.rs.next()) 
+		{
+			Produto prod = new Produto();
+
+			prod.setId(this.rs.getInt("id"));
+			prod.setNome(this.rs.getString("nome"));
+			prod.setDescricao(this.rs.getString("descricao"));
+			prod.setTipo(this.rs.getString("tipo"));
+			prod.setPreco(this.rs.getFloat("preco"));
+			prod.setQuantidadeNoEstoque(0);
+
+			objetos.add(prod);
+		}
 		
-		int id=0;
-		String status="";
-	    String sql="INSERT INTO produto(nome,preco,descricao,quantidadeNoEstoque,tipo) "
-	    		+ "VALUES(?,?,?,?,?) RETURNING id";//https://www.dbrnd.com/2015/11/postgresql-select-last-inserted-id-or-sequence-value/
+		return objetos;
+	}
+
+	public boolean update(Produto produto)
+	{
+		boolean status;
+
+		this.conn = ConnectionFactory.getConnection();
 
 		try {
 
-			PreparedStatement ps = CF.prepareStatement(sql);
-	        ps.setString(1,nome);
-	        ps.setFloat(2,preco);
-	        ps.setString(3,descricao);
-	        ps.setInt(4,quantidade);
-			ps.setString(5,tipo);
-	        ResultSet RS=ps.executeQuery();
-	        
-	        while(RS.next()) {
-	        	id=RS.getInt("id");
-	        }
-
-			status="Cadastro realizado com sucesso de produto de nome:"+nome+"(de ID:"+id+")";
+			String sql = "UPDATE produto SET nome = ?,preco = ?,descricao = ?,quantidadeNoEstoque = ? WHERE id = ?";
+			this.pst = this.conn.prepareStatement(sql);
+			this.pst.setString(1, produto.getNome());
+			this.pst.setFloat(2, produto.getPreco());
+			this.pst.setString(3, produto.getDescricao());
+			this.pst.setInt(4, produto.getQuantidadeNoEstoque());
+			this.pst.setInt(5, produto.getId());
+			this.pst.execute();
+			this.conn.commit();
+			status = true;
 
 		} catch (SQLException e) {
-
-            status=e.toString();
-			
-        }
-	    
-
-	        return status;
-	}
-	public List Select(String tipoDeCondicao,String condicao,ArrayList<?> tipos) throws SQLException, ClassNotFoundException{
-		
-		ResultSet RS=null;
-		
-		ConnectionFactory CF = new ConnectionFactory();
-		Connection connection=CF.getConnection();
-		
-	    if(tipoDeCondicao.equals("id")){
-
-	         int id=Integer.parseInt(condicao);
-
-	        String sql="SELECT * FROM produto WHERE id=?";
-
-	        PreparedStatement ps = connection.prepareStatement(sql);
-	        ps.setInt(1,id);
-
-	         RS=ps.executeQuery();
-	        
-
-	    }if(tipoDeCondicao.equals("nome")){
-
-	        String sql="";
-
-	        if(tipos!=null){//se usuario selecionou "tipos"
-
-	                for(int i=0;i<tipos.size();i++){
-	                sql+="SELECT * FROM produto WHERE nome ILIKE %"+condicao+"% AND tipo="+tipos.get(i)+"";  
-	                    if(i!=tipos.size()){//Quando for o ultimo nao adicionara union
-	                        sql+=" UNION ";
-	                    }
-	                }
-	                
-	             PreparedStatement ps = connection.prepareStatement(sql);
-	             RS=ps.executeQuery();
-	            
-
-	        }else{
-	            sql="SELECT * FROM produto WHERE nomeProduto ILIKE %"+condicao+"%";
-	            PreparedStatement ps = connection.prepareStatement(sql);
-	             RS=ps.executeQuery();
-	            
-	        }
-
-	    }
-	    List <ProdutoController> Objetos=new ArrayList <ProdutoController> ();
-		while(RS.next()){
-			ProdutoController produto = new ProdutoController();
-			produto.setNome(RS.getString("nome"));
-			
-			Objetos.add(produto);
-//			Objetos.add(new Produto(RS.getString("nome")));
+			e.printStackTrace();
+			status = false;
 		}
-		return Objetos;
+
+		return status;
 	}
-	public void ListarProduto(int id) throws SQLException, ClassNotFoundException{
-		ConnectionFactory CF = new ConnectionFactory();
-		Connection connection=CF.getConnection();
-		
-		String sql="SELECT * FROM produto WHERE id=?";
-		PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1,id);
-			ResultSet RS=ps.executeQuery();
-			while(RS.next()){
-				/*new Produto(
-				 * 		RS.getInt("id"),
-						RS.getString("nome"),
-						RS.getString("descricao"),
-						RS.getString("tipo"),
-						RS.getFloat("preco"),
-						RS.getInt("quantidadeNoEstoque"),
-						RS.getInt("quantidadeConsideradaBaixa"));
-				*/
-			}
-	}
-	public String Update(int id,String nome,String preco,String descricao,int quantidadeNoEstoque) throws SQLException, ClassNotFoundException{
-	    String status="";
 
-	    ConnectionFactory CF = new ConnectionFactory();
-		Connection connection=CF.getConnection();
-       
-	    try{
-
-			String sql="UPDATE produto SET nome=?,preco=?,descricao=?,quantidadeNoEstoque=? WHERE id=?";
-				PreparedStatement ps = connection.prepareStatement(sql);
-					ps.setString(1,nome);
-					ps.setString(2,preco);
-					ps.setString(3,descricao);
-					ps.setInt(4,quantidadeNoEstoque);
-					ps.setInt(5,id);
-					ps.execute();
-
-			status="Atualizacao concluida";
-
-		} catch (SQLException e) {
-
-            status="Banco com erro ou inativo:"+e;
-			
-        }
-			
-
-
-	        return status;
+	public void listarProduto(int id, Produto produto) throws SQLException 
+	{
+		this.conn = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM produto WHERE id=?";
+		this.pst = this.conn.prepareStatement(sql);
+		this.pst.setInt(1, id);
+		this.rs = this.pst.executeQuery();
+		while (this.rs.next()) 
+		{
+			produto.setId(this.rs.getInt("id"));
+			produto.setNome(this.rs.getString("nome"));
+			produto.setDescricao(this.rs.getString("descricao"));
+			produto.setTipo(this.rs.getString("tipo"));
+			produto.setPreco(this.rs.getFloat("preco"));
+			produto.setQuantidadeNoEstoque(this.rs.getInt("quantidadeNoEstoque"));
+		}
 
 	}
-	public String Remove(int id) throws ClassNotFoundException{
+
+	public String remove(int id) 
+	{
+
+		this.conn = ConnectionFactory.getConnection();
 		
-		ConnectionFactory CF = new ConnectionFactory();
-		Connection connection=CF.getConnection();
-		
+
 		return null;
 
 	}
-	
-	public List<ProdutoController> t(){
-		List <ProdutoController> Guardar = new ArrayList<ProdutoController>();
-		
-		ProdutoController produto = new ProdutoController(1,"Ian","","",1,1,1);
-//		Guardar.add(new ProdutoController(1,"Ian","","",1,1,1));
-		Guardar.add(produto);
-		produto = new ProdutoController(1,"Jorge","","",1,1,1);
-		
-//		Guardar.add(new ProdutoController(1,"Jorge","","",1,1,1));
-		Guardar.add(produto);
-		
-		System.out.println(Guardar.get(0).getNome());
-		System.out.println(Guardar.get(1).getNome());
-		return Guardar;
-		
+
+	public List<Produto> t() {
+		List<Produto> guardar = new ArrayList<Produto>();
+
+		Produto produto = new Produto(1, "Ian", "", "", 1, 1, 1);
+		guardar.add(produto);
+		produto = new Produto(1, "Jorge", "", "", 1, 1, 1);
+
+		guardar.add(produto);
+
+		return guardar;
+
 	}
-	
-	/*public ArrayList VerificarEstoque(){
-	    String sql="SELECT * FROM produto";
-	    ArrayList Aviso=new ArrayList();     
-	    
-	        while(RS.next()){
-	        	
-	            if(RS.getInt("quantidadeNoEstoque") >= RS.getInt("quantidadeConsideradaBaixa")){
-	                Aviso.add("O produto "+RS.getString("nome")+"(de ID:"+RS.getInt("id")+") esta com estoque baixo\n"+
-	                          "Estoque atual:"+RS.getInt("quantidadeNoEstoque")+
-	                          "(Quantidade considerada baixa em "+RS.getInt("quantidadeConsideradaBaixa")+")");
-	            }
-	            
-	        }
-	        return Aviso;
 
-	}*/
-
-
-/*
-	-produto
-	id
-	nome VARCHAR
-	descricao VARCHAR
-	tipo VARCHAR
-	//subtipo VARCHAR
-	preco FLOAT
-	quantidadeNoEstoque INT
-	quantidadeConsideradaBaixa INT
-
-	-venda
-	id
-	id_cliente
-	timestamp
-
-	-venda_produto
-	id_venda
-	id_produto
-	quantidadeComprada
-	
-	CREATE TABLE produto(
-		 id serial PRIMARY KEY,
-		 nome VARCHAR (50),
-		 descricao VARCHAR (50),
-		 tipo VARCHAR (50),
-		 preco float(20),
-		 quantidadeNoEstoque INTEGER,
-		 quantidadeConsideradaBaixa INTEGER,
-		 created_on TIMESTAMP
-	);
-	CREATE TABLE venda(
-		 id serial PRIMARY KEY,
-		 id_produto references produto(id),
-		 id_cliente references cliente(id),
-		 dataDeCompra date
-	);
-	CREATE TABLE venda_produto(
-		 id serial PRIMARY KEY,
-		 id_venda references venda(id),
-		 id_produto references produto(id),
-		 quantidadeComprada INTEGER
-	);
-	
-*/
 }
