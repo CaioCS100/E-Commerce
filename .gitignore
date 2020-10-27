@@ -1,1 +1,18 @@
+# Directories
 /bin/
+
+# Maven 
+/target/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+.metadata
+config.properties
+
+# IntelliJ project files
+*.iml
+*.iws
+*.ipr
+.idea/
