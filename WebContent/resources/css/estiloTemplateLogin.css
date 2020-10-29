@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+
+body {
+    top: 0px;
+    margin-top: 0px;
+}
+
+#menuPrincipal {
+    background: #CFB53B;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    background: #CFB53B;
+    right: 5%;
+}
+
+.ui-menuitem-text {
+    color: #333333;
+}
+
+#footer {
+    bottom: 0%;
+    position: fixed;
+}

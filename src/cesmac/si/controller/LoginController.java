@@ -15,8 +15,8 @@ public class LoginController {
 	Pessoa model = new Pessoa();
 	LoginDAO dao = new LoginDAO();
 	Pessoa usuarioLogado = new Pessoa();
-	public void abrirModal()
-	{
+
+	public void abrirModal() {
 		PrimeFaces context = PrimeFaces.current();
 		context.executeScript("$('#login').modal('show')");
 	}

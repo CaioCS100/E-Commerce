@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <b:modal title="Login" styleClass="modalPseudoClass" id="login">
+        <h:form id="modalLogin">
+            <b:inputText placeholder="Email" required="true" label="Email:"
+                         colMd="10" labelColMd="2" value="#{loginController.model.email}">
+                <f:facet name="prepend">
+                    <b:icon name="user"/>
+                </f:facet>
+            </b:inputText>
+
+            <b:inputSecret placeholder="Senha" label="Senha:" required="true"
+                           colMd="10" labelColMd="2" value="#{loginController.model.senha}">
+                <f:facet name="prepend">
+                    <b:iconAwesome name="key"/>
+                </f:facet>
+            </b:inputSecret>
+            <b:commandButton value="Logar" type="submit" ajax="true"
+                             update=":modalLogin" action="#{loginController.fazerLogin()}"/>
+        </h:form>
+    </b:modal>
+</h:body>
+</html>
