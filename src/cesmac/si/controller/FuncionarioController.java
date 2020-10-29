@@ -1,30 +1,24 @@
 package cesmac.si.controller;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
+import cesmac.si.dao.FuncionarioDAO;
+import cesmac.si.model.Funcionario;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
-import javax.imageio.ImageIO;
-
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-
-import cesmac.si.dao.FuncionarioDAO;
-import cesmac.si.model.Funcionario;
 
 @ManagedBean(name = "controleFuncionario")
 @SessionScoped
@@ -37,10 +31,9 @@ public class FuncionarioController {
 	private List<Funcionario> listaFuncionario;
 	private PrimeFaces context = PrimeFaces.current(); // item necessario para poder usar js no backend
     private boolean uploadImagem = true; 
-    private boolean modificarCampos = false; //Se for true, o usuário só vai poder visualiza-los se for false ele vai poder alterar os campos. 
+    private boolean modificarCampos = false; //Se for true, o usuï¿½rio sï¿½ vai poder visualiza-los se for false ele vai poder alterar os campos.
 
-	@PostConstruct
-	public void init() {
+	public FuncionarioController() {
 		this.model = new Funcionario();
 		this.dao = new FuncionarioDAO();
 	}
@@ -58,11 +51,11 @@ public class FuncionarioController {
 		this.model.setTelefone(telefoneDDD[1]);
 		if (dao.cadastrarFuncionario(model)) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionário Cadastrado com sucesso"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionï¿½rio Cadastrado com sucesso"));
 			this.model = new Funcionario();
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Cadastrar o Funcionário"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Cadastrar o Funcionï¿½rio"));
 		}
 		
 	}
@@ -143,12 +136,12 @@ public class FuncionarioController {
 		if (dao.editarFuncionario(modelParaEditarEVisualizar)) 
 		{
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionário Editado com sucesso"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionï¿½rio Editado com sucesso"));
 		} 
 		else 
 		{
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Editar o Funcionário"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em Editar o Funcionï¿½rio"));
 		}
 		this.context.executeScript("$('#modal').modal('hide')");
 		carregarTabelaFuncionarios();
@@ -176,13 +169,13 @@ public class FuncionarioController {
 		if (dao.deletarFuncionario(funcionario.getId())) 
 		{
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionário deletado com sucesso"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcionï¿½rio deletado com sucesso"));
 			listaFuncionario.remove(funcionario);
 		} 
 		else 
 		{
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em deletar o Funcionário"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em deletar o Funcionï¿½rio"));
 		}
 		
 	}
