@@ -1,28 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
-    <b:modal title="Login" styleClass="modalPseudoClass" id="login">
-        <h:form id="modalLogin">
-            <b:inputText placeholder="Email" required="true" label="Email:"
-                         colMd="10" labelColMd="2" value="#{loginController.model.email}">
+    <b:modal title="Login" styleClass="modalPseudoClass" id="mdLogin" backdrop="static" closable="false">
+        <h:form id="formLogin">
+            <b:messages id="msg" escape="true"/>
+
+            <b:inputText placeholder="Email"  label="Email:" id="inputEmail" required="true"
+                         requiredMessage="Informe um email"
+                         colMd="10" labelColMd="2" value="#{usuarioMB.usuario.email}">
                 <f:facet name="prepend">
                     <b:icon name="user"/>
                 </f:facet>
             </b:inputText>
 
             <b:inputSecret placeholder="Senha" label="Senha:" required="true"
-                           colMd="10" labelColMd="2" value="#{loginController.model.senha}">
+                           requiredMessage="Informe uma senha"
+                           colMd="10" labelColMd="2" value="#{usuarioMB.usuario.senha}">
                 <f:facet name="prepend">
                     <b:iconAwesome name="key"/>
                 </f:facet>
             </b:inputSecret>
-            <b:commandButton value="Logar" type="submit" ajax="true"
-                             update=":modalLogin" action="#{loginController.fazerLogin()}"/>
+
+            <div align="center">
+                <b:commandButton value="Logar" ajax="true" update="formLogin" action="#{usuarioMB.fazerLogin()}"
+                                 styleClass="espaco-direita espaco-topo"/>
+
+                <b:commandButton value="Fechar" ajax="true" update="formLogin" process="@this" styleClass="espaco-topo"
+                                 actionListener="#{usuarioMB.limparObjetoUsuario()}"
+                                 action="#{usuarioMB.fecharModalLogin()}">
+                    <p:resetInput target="formLogin"/>
+                </b:commandButton>
+            </div>
         </h:form>
     </b:modal>
 </h:body>

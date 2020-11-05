@@ -20,32 +20,34 @@
 </h:head>
 <h:body>
     <div id="header">
-        <b:navBar brand="BuyExplore" fluid="true" brandHref="teste.xhtml" id="menuPrincipal">
-            <b:navbarLinks>
-                <b:navLink value="Destaques" href="#"></b:navLink>
-                <b:navLink value="Promoção" href="#"></b:navLink>
-                <b:dropMenu value="Smartphones" iconAwesome="birthday-cake">
-                    <b:navLink value="Android" href="#"></b:navLink>
-                    <b:navLink value="IOS" href="#"></b:navLink>
-                    <b:navLink value="Outros" href="#"></b:navLink>
-                </b:dropMenu>
-                <b:dropMenu value="Computadores" iconAwesome="birthday-cake">
-                    <b:navLink value="Notebooks" href="#"></b:navLink>
-                    <b:navLink value="Tablets" href="#"></b:navLink>
-                    <b:navLink value="SmartWatches" href="#"></b:navLink>
-                    <b:navLink value="Outros" href="#"></b:navLink>
-                </b:dropMenu>
-                <b:dropMenu value="Games" iconAwesome="birthday-cake">
-                    <b:navLink value="Consoles" href="#"></b:navLink>
-                    <b:navLink value="Jogos" href="#"></b:navLink>
-                    <b:navLink value="Acessórios" href="#"></b:navLink>
-                </b:dropMenu>
-            </b:navbarLinks>
-            <h:form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs">
-                <b:commandButton value="Fazer Login" process="@this" ajax="true"
-                                 action="#{loginController.abrirModal()}"/>
-            </h:form>
-        </b:navBar>
+        <h:form>
+            <b:navBar brand="BuyExplore" fluid="true" brandHref="teste.xhtml" id="menuPrincipal">
+                <b:navbarLinks>
+                    <b:navLink value="Destaques" href="#"></b:navLink>
+                    <b:navLink value="Promoção" href="#"></b:navLink>
+                    <b:dropMenu value="Smartphones" iconAwesome="birthday-cake">
+                        <b:navLink value="Android" href="#"></b:navLink>
+                        <b:navLink value="IOS" href="#"></b:navLink>
+                        <b:navLink value="Outros" href="#"></b:navLink>
+                    </b:dropMenu>
+                    <b:dropMenu value="Computadores" iconAwesome="birthday-cake">
+                        <b:navLink value="Notebooks" href="#"></b:navLink>
+                        <b:navLink value="Tablets" href="#"></b:navLink>
+                        <b:navLink value="SmartWatches" href="#"></b:navLink>
+                        <b:navLink value="Outros" href="#"></b:navLink>
+                    </b:dropMenu>
+                    <b:dropMenu value="Games" iconAwesome="birthday-cake">
+                        <b:navLink value="Consoles" href="#"></b:navLink>
+                        <b:navLink value="Jogos" href="#"></b:navLink>
+                        <b:navLink value="Acessórios" href="#"></b:navLink>
+                    </b:dropMenu>
+                </b:navbarLinks>
+                <div class="navbar-form navbar-left hidden-md hidden-sm hidden-xs">
+                    <b:commandButton value="Login" ajax="true" update=":formLogin"
+                                     action="#{usuarioMB.abrirModalLogin()}"/>
+                </div>
+            </b:navBar>
+        </h:form>
     </div>
 
     <div id="body">
@@ -55,7 +57,6 @@
     <div id="footer">
         <h3>© 2018 DTI BuyExplore. All rights reserved</h3>
     </div>
-
 
     <ui:include src="../pages/modals/modalLogin.xhtml"/>
 </h:body>

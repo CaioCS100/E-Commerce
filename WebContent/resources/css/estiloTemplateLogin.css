@@ -22,3 +22,11 @@ body {
     bottom: 0%;
     position: fixed;
 }
+
+.espaco-direita {
+    margin-right: 5%;
+}
+
+.espaco-topo {
+    margin-top: 3%;
+}

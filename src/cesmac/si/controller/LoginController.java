@@ -18,7 +18,7 @@ public class LoginController {
 
 	public void abrirModal() {
 		PrimeFaces context = PrimeFaces.current();
-		context.executeScript("$('#login').modal('show')");
+		context.executeScript("$('#mdLogin').modal('show')");
 	}
 	
 	public String fazerLogin() {

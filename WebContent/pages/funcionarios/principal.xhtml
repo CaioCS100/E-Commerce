@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="StyleSheet" type="text/css" href="css/estiloMenuLateral.css"/>
+    <title>Controle Interno</title>
+</h:head>
+<h:body>
+    <b:flyOutMenu id="menu">
+        <b:navLink value="BUY EXPLORE" icon="globe" iconAlign="left"
+                   href="interno.xhtml"/>
+        <b:dropMenu value="LOJA/VENDAS">
+            <b:navLink value="Pedidos"/>
+            <b:navLink value="Cupons"/>
+            <b:navLink value="Relatórios"/>
+            <b:navLink value="Status"/>
+        </b:dropMenu>
+        <b:dropMenu value="FUNCIONÁRIOS">
+            <b:navLink value="Cadastrar" href="cadastrarFuncionario.xhtml"/>
+            <b:navLink value="Visualizar" href="mostrarFuncionarios.xhtml"/>
+            <b:navLink value="Relatórios"/>
+            <b:navLink value="Status"/>
+        </b:dropMenu>
+        <b:dropMenu value="CLIENTES">
+            <b:navLink value="Visualizar" href="mostrarClientes.xhtml"/>
+            <b:navLink value="Relatórios"/>
+            <b:navLink value="Status"/>
+        </b:dropMenu>
+        <b:dropMenu value="PRODUTOS">
+            <b:navLink value="Cadastrar" href="cadastrarProduto.xhtml"/>
+            <b:navLink value="Visualizar" href="pesquisar.xhtml"/>
+            <b:navLink value="Relatórios"/>
+            <b:navLink value="Status"/>
+        </b:dropMenu>
+        <b:navLink value="CENTRAL DE SUPORTE"/>
+    </b:flyOutMenu>
+</h:body>
+</html>

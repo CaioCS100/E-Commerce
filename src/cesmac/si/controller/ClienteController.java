@@ -82,7 +82,7 @@ public class ClienteController {
 		
 		if(new ClienteDAO().excluirUsuario(idClienteSelecionado)) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Cliente excluído com sucesso"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Cliente excludo com sucesso"));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null,
