@@ -1,18 +1,18 @@
-.img{
-	width: 250px;
+.img {
+	width: 230px;
 	height:200px;
 }
 
-.label-title{
-	 margin-left: 12%;
+.label-title {
+	 margin-left: 3%;
 }
 
-.label-title-small{
+.label-title-small {
 	 margin-left: 20%;
 }
 
-.label-desc{
-	 margin-left: 12%;
+.label-desc {
+	margin-left: 0%;
 }
 
 .label-desc-small{
@@ -21,4 +21,4 @@
 
 .line{
 	margin-bottom: 5%;
-}   
+}

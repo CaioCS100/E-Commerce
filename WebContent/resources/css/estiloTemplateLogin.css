@@ -30,3 +30,7 @@ body {
 .espaco-topo {
     margin-top: 3%;
 }
+
+.navbar-header {
+    padding-left: 1%;
+}

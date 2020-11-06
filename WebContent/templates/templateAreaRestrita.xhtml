@@ -15,7 +15,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale = 1.0"/>
 
-    <link rel="StyleSheet" type="text/css" href="../../resources/css/estiloTemplateLogin.css"/>
+    <h:outputStylesheet library = "css" name = "estiloTemplateLogin.css" />
+    <h:outputStylesheet library = "css" name = "estiloFormFuncionario.css" />
 </h:head>
 <h:body>
     <div id="header">
@@ -28,7 +29,7 @@
                         <b:navLink value="Relatórios"/>
                     </b:dropMenu>
                     <b:dropMenu value="Funcionários">
-                        <b:navLink value="Cadastrar" href="cadastrarFuncionario.xhtml"/>
+                        <b:navLink value="Cadastrar"  href="funcionarios/cadastrar.xhtml"/>
                         <b:navLink value="Visualizar" href="mostrarFuncionarios.xhtml"/>
                         <b:navLink value="Relatórios"/>
                     </b:dropMenu>

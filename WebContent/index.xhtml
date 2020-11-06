@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -9,129 +10,81 @@
     <ui:define name="body">
         <h:form enctype="multipart/form-data">
             <b:container fluid="true">
-                <b:row styleClass="line">
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="Notebook Lenovo"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/lenovo.png" tooltip="small-screen='one-third'"
-                                     styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$1.999,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                <div align="center" style="width: 95%;">
+                    <b:panelGrid columns="4">
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="Notebook Lenovo" styleClass="label-title"/>
+                                <b:image value="resources/images/lenovo.png" tooltip="Nootbook Lenovo" styleClass="img"/>
+                                <h:outputLabel value="R$1.999,00" styleClass="label-desc"></h:outputLabel>
+                            </div>
+                        </b:panelGrid>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="iPhone X"
-                                           styleClass="label-title-small"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/iPhone x.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$6.999,99"
-                                           styleClass="label-desc-small"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="iPhone X"/>
+                                <b:image value="resources/images/iPhone x.jpg" tooltip="iPhone X" styleClass="img"/>
+                                <h:outputLabel value="R$6.999,99" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="PC Gamer hercules"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/hercules.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$4.999,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="PC Gamer Hercules" styleClass="label-title"/>
+                                <b:image value="resources/images/hercules.jpg" tooltip="PC Gamer Hercules" styleClass="img"/>
+                                <h:outputLabel value="R$4.999,00" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="TV Sansumg 4k"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/sansumg 4k.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$3.599,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
-                </b:row>
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="TV Sansumg 4k" styleClass="label-title"/>
+                                <b:image value="resources/images/sansumg 4k.jpg" tooltip="TV Sansumg 4k" styleClass="img"/>
+                                <h:outputLabel value="R$3.599,00" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
 
-                <b:row styleClass="line">
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="Notebook Lenovo"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/lenovo.png" tooltip="small-screen='one-third'"
-                                     styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$1.999,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                    </b:panelGrid>
+                </div>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="iPhone X"
-                                           styleClass="label-title-small"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/iPhone x.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$6.999,99"
-                                           styleClass="label-desc-small"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                <br/><br/><br/>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="PC Gamer hercules"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/hercules.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$4.999,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
+                <div align="center" style="width: 95%;">
+                    <b:panelGrid columns="4">
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="Notebook Lenovo" styleClass="label-title"/>
+                                <b:image value="resources/images/lenovo.png" tooltip="Nootbook Lenovo" styleClass="img"/>
+                                <h:outputLabel value="R$1.999,00" styleClass="label-desc"></h:outputLabel>
+                            </div>
+                        </b:panelGrid>
 
-                    <b:column colMd="3">
-                        <b:column>
-                            <h:outputLabel class="product-label" value="TV Sansumg 4k"
-                                           styleClass="label-title"></h:outputLabel>
-                        </b:column>
-                        <b:column>
-                            <b:image small-screen="one-third" value="imgs/sansumg 4k.jpg"
-                                     tooltip="small-screen='one-third'" styleClass="img"/>
-                        </b:column>
-                        <b:column>
-                            <h:outputLabel class="product-preco" value="R$3.599,00"
-                                           styleClass="label-desc"></h:outputLabel>
-                        </b:column>
-                    </b:column>
-                </b:row>
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="iPhone X"/>
+                                <b:image value="resources/images/iPhone x.jpg" tooltip="iPhone X" styleClass="img"/>
+                                <h:outputLabel value="R$6.999,99" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
+
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="PC Gamer Hercules" styleClass="label-title"/>
+                                <b:image value="resources/images/hercules.jpg" tooltip="PC Gamer Hercules" styleClass="img"/>
+                                <h:outputLabel value="R$4.999,00" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
+
+                        <b:panelGrid columns="1">
+                            <div>
+                                <h:outputLabel value="TV Sansumg 4k" styleClass="label-title"/>
+                                <b:image value="resources/images/sansumg 4k.jpg" tooltip="TV Sansumg 4k" styleClass="img"/>
+                                <h:outputLabel value="R$3.599,00" styleClass="label-desc"/>
+                            </div>
+                        </b:panelGrid>
+
+                    </b:panelGrid>
+                </div>
             </b:container>
         </h:form>
     </ui:define>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="../../../templates/templateAreaRestrita.xhtml">
+
+    <ui:define name="body">
+        <h:form enctype="multipart/form-data" id="formcadastroFuncionario">
+            <b:messages id="msg" escape="true"/>
+            <div id="tamanhoForm">
+                <div id="ui-header">
+                    <b:container fluid="true">
+                        <h1>pegando</h1>
+                    </b:container>
+
+                    <b:commandButton type="submit" ajax="true" update="formcadastroFuncionario"
+                                     action="#{controleFuncionario.salvarFuncionario()}" value="Salvar"/>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
