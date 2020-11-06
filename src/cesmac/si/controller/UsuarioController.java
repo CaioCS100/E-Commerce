@@ -39,7 +39,7 @@ public class UsuarioController implements Serializable {
     }
 
     public void fazerLogin() {
-        if (this.usuario.getEmail() != null && this.usuario.getSenha() != null && this.usuario.getSenha().equals("123")) {
+        if (this.usuario.getEmail().equals("adm@adm.com") && this.usuario.getSenha().equals("123")) {
             redirecionarParaPagPrincipalFuncionario();
         }
         else {
@@ -49,7 +49,7 @@ public class UsuarioController implements Serializable {
 
     private void redirecionarParaPagPrincipalFuncionario() {
         try {
-            redirecionarParaPagina("/pages/funcionarios/principal");
+            redirecionarParaPagina("/pages/restrito/principal");
         } catch (IOException ex) {
             exibirMensagemErro(String.format(MSG_ERRO_REDIRECIONAR, "principal", ex.getMessage()));
         }

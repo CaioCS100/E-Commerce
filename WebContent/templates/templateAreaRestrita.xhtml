@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <ui:insert name="title">
+        <title>BUY EXPLORE</title>
+    </ui:insert>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale = 1.0"/>
+
+    <link rel="StyleSheet" type="text/css" href="../../resources/css/estiloTemplateLogin.css"/>
+</h:head>
+<h:body>
+    <div id="header">
+        <h:form>
+            <b:navBar brand="BuyExplore" fluid="true" brandHref="principal.xhtml" id="menuPrincipal">
+                <b:navbarLinks>
+                    <b:dropMenu value="Loja/Vendas">
+                        <b:navLink value="Pedidos"/>
+                        <b:navLink value="Cupons"/>
+                        <b:navLink value="Relatórios"/>
+                    </b:dropMenu>
+                    <b:dropMenu value="Funcionários">
+                        <b:navLink value="Cadastrar" href="cadastrarFuncionario.xhtml"/>
+                        <b:navLink value="Visualizar" href="mostrarFuncionarios.xhtml"/>
+                        <b:navLink value="Relatórios"/>
+                    </b:dropMenu>
+                    <b:dropMenu value="Clientes">
+                        <b:navLink value="Visualizar" href="mostrarClientes.xhtml"/>
+                        <b:navLink value="Relatórios"/>
+                        <b:navLink value="Status"/>
+                    </b:dropMenu>
+                    <b:dropMenu value="Produtos">
+                        <b:navLink value="Cadastrar" href="cadastrarProduto.xhtml"/>
+                        <b:navLink value="Visualizar" href="pesquisar.xhtml"/>
+                        <b:navLink value="Relatórios"/>
+                        <b:navLink value="Status"/>
+                    </b:dropMenu>
+                    <b:navLink value="CENTRAL DE SUPORTE"/>
+                </b:navbarLinks>
+            </b:navBar>
+        </h:form>
+    </div>
+
+    <div id="body">
+        <ui:insert name="body"/>
+    </div>
+
+    <div id="footer">
+        <h3>© 2018 DTI BuyExplore. All rights reserved</h3>
+    </div>
+</h:body>
+</html>
