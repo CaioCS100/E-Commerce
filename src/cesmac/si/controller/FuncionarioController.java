@@ -2,6 +2,8 @@ package cesmac.si.controller;
 
 import cesmac.si.dao.FuncionarioDAO;
 import cesmac.si.model.Funcionario;
+import cesmac.si.model.Imagem;
+import cesmac.si.util.CepUtil;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -11,16 +13,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-@ManagedBean(name = "controleFuncionario")
+import static cesmac.si.util.VerificadorUtil.naoEstaVazioOuNulo;
+
+@ManagedBean(name = "funcionarioMB")
 @SessionScoped
 public class FuncionarioController {
 	
@@ -31,11 +29,36 @@ public class FuncionarioController {
 	private List<Funcionario> listaFuncionario;
 	private PrimeFaces context = PrimeFaces.current(); // item necessario para poder usar js no backend
     private boolean uploadImagem = true; 
-    private boolean modificarCampos = false; //Se for true, o usu�rio s� vai poder visualiza-los se for false ele vai poder alterar os campos.
+    private boolean modificarCampos = false;
+
+    private Funcionario funcionario;
 
 	public FuncionarioController() {
+		this.funcionario = new Funcionario();
+
 		this.model = new Funcionario();
 		this.dao = new FuncionarioDAO();
+	}
+
+	public void carregarDadosTela() {
+		this.funcionario = new Funcionario();
+	}
+
+	public void buscarCep() {
+		String cep = this.funcionario.getEndereco().getCep().replaceAll("\\D*","");
+
+		if (cep.length() == 8)
+			this.funcionario.setEndereco(CepUtil.buscarCep(cep));
+	}
+
+	public void uploadImagem(FileUploadEvent event) {
+		if (naoEstaVazioOuNulo(event.getFile())) {
+			Imagem imagem = new Imagem();
+			imagem.setFoto(event.getFile().getContents());
+			imagem.setExtensaoImagem(event.getFile().getContentType());
+			imagem.setNome(event.getFile().getFileName());
+			this.funcionario.setImagem(imagem);
+		}
 	}
 	
 	public void carregarTabelaFuncionarios()
@@ -46,7 +69,7 @@ public class FuncionarioController {
 	public void salvarFuncionario() {
 		String[] telefoneDDD = this.controleUtilitario.retirarMascaraTelefone(this.model.getTelefone());
 		this.model.setCpf(this.controleUtilitario.retirarMascara(this.model.getCpf()));
-		this.model.setCep(this.controleUtilitario.retirarMascara(this.model.getCep()));
+//		this.model.setCep(this.controleUtilitario.retirarMascara(this.model.getCep()));
 		this.model.setDdd(telefoneDDD[0]);
 		this.model.setTelefone(telefoneDDD[1]);
 		if (dao.cadastrarFuncionario(model)) {
@@ -62,43 +85,43 @@ public class FuncionarioController {
 	
 	public void carregarImagem(FileUploadEvent event) {
 		
-		try {
-			if(event.getFile().getInputstream() != null)
-			{
-				InputStream input = event.getFile().getInputstream();
-				this.model.setExtensaoImagem(event.getFile().getContentType());
-				
-				boolean isPng = this.model.getExtensaoImagem().endsWith("png");
-				
-				BufferedImage imageBuffer = ImageIO.read(input);
-				int type = BufferedImage.TYPE_INT_RGB;
-				if(isPng)
-		        {
-		            type = BufferedImage.BITMASK;
-		        }
-				BufferedImage redimensionarImagem = new BufferedImage(200, 200, type);
-				Graphics2D graphics2D = redimensionarImagem.createGraphics();
-		        graphics2D.setComposite(AlphaComposite.Src);
-		        graphics2D.drawImage(imageBuffer, 0, 0, 200, 200, null);
-		        ByteArrayOutputStream bytesImgem = new ByteArrayOutputStream();
-		        if(isPng)
-		        {
-		        	ImageIO.write(redimensionarImagem,"png", bytesImgem);
-		        }
-		        else
-		        {
-		            ImageIO.write(redimensionarImagem,"jpg", bytesImgem);
-		        }
-		        bytesImgem.flush();
-		        byte[] byteArray = bytesImgem.toByteArray();
-		        bytesImgem.close();
-		        
-		        this.model.setImagem(byteArray);
-			}			
-	        
-        } catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if(event.getFile().getInputstream() != null)
+//			{
+//				InputStream input = event.getFile().getInputstream();
+//				this.model.setExtensaoImagem(event.getFile().getContentType());
+//
+//				boolean isPng = this.model.getExtensaoImagem().endsWith("png");
+//
+//				BufferedImage imageBuffer = ImageIO.read(input);
+//				int type = BufferedImage.TYPE_INT_RGB;
+//				if(isPng)
+//		        {
+//		            type = BufferedImage.BITMASK;
+//		        }
+//				BufferedImage redimensionarImagem = new BufferedImage(200, 200, type);
+//				Graphics2D graphics2D = redimensionarImagem.createGraphics();
+//		        graphics2D.setComposite(AlphaComposite.Src);
+//		        graphics2D.drawImage(imageBuffer, 0, 0, 200, 200, null);
+//		        ByteArrayOutputStream bytesImgem = new ByteArrayOutputStream();
+//		        if(isPng)
+//		        {
+//		        	ImageIO.write(redimensionarImagem,"png", bytesImgem);
+//		        }
+//		        else
+//		        {
+//		            ImageIO.write(redimensionarImagem,"jpg", bytesImgem);
+//		        }
+//		        bytesImgem.flush();
+//		        byte[] byteArray = bytesImgem.toByteArray();
+//		        bytesImgem.close();
+//
+//		        this.model.setImagem(byteArray);
+//			}
+//
+//        } catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 	
@@ -123,14 +146,14 @@ public class FuncionarioController {
 	{
 		String[] telefoneDDD = this.controleUtilitario.retirarMascaraTelefone(this.modelParaEditarEVisualizar.getTelefone());
 		this.modelParaEditarEVisualizar.setCpf(this.controleUtilitario.retirarMascara(this.modelParaEditarEVisualizar.getCpf()));
-		this.modelParaEditarEVisualizar.setCep(this.controleUtilitario.retirarMascara(this.modelParaEditarEVisualizar.getCep()));
+//		this.modelParaEditarEVisualizar.setCep(this.controleUtilitario.retirarMascara(this.modelParaEditarEVisualizar.getCep()));
 		this.modelParaEditarEVisualizar.setDdd(telefoneDDD[0]);
 		this.modelParaEditarEVisualizar.setTelefone(telefoneDDD[1]);
 		// aqui verifica se o usuario mudou a foto na hora de editar um funcionario
 		if(this.model.getImagem() != null)
 		{
 			this.modelParaEditarEVisualizar.setImagem(model.getImagem());
-			this.modelParaEditarEVisualizar.setExtensaoImagem(model.getExtensaoImagem());
+//			this.modelParaEditarEVisualizar.setExtensaoImagem(model.getExtensaoImagem());
 		}
 		
 		if (dao.editarFuncionario(modelParaEditarEVisualizar)) 
@@ -147,81 +170,51 @@ public class FuncionarioController {
 		carregarTabelaFuncionarios();
 	}
 	
-	public StreamedContent getImageFromDB() {
-		
-		InputStream inputStream = null;
-		StreamedContent streamedContent = null;
-		
-		if (this.modelParaEditarEVisualizar.getImagem() == null) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			inputStream = facesContext.getExternalContext().getResourceAsStream("/imgs/no-image.png");
-			streamedContent = new DefaultStreamedContent(inputStream, "image/png");
-		} else {
-			inputStream = new ByteArrayInputStream(this.modelParaEditarEVisualizar.getImagem());
-			streamedContent = new DefaultStreamedContent(inputStream, this.modelParaEditarEVisualizar.getExtensaoImagem());
-		}
-		
-		return streamedContent;
-	}
+//	public StreamedContent getImageFromDB() {
+//
+//		InputStream inputStream = null;
+//		StreamedContent streamedContent = null;
+//
+//		if (this.modelParaEditarEVisualizar.getImagem() == null) {
+//			FacesContext facesContext = FacesContext.getCurrentInstance();
+//			inputStream = facesContext.getExternalContext().getResourceAsStream("/imgs/no-image.png");
+//			streamedContent = new DefaultStreamedContent(inputStream, "image/png");
+//		} else {
+//			inputStream = new ByteArrayInputStream(this.modelParaEditarEVisualizar.getImagem());
+//			streamedContent = new DefaultStreamedContent(inputStream, this.modelParaEditarEVisualizar.getExtensaoImagem());
+//		}
+//
+//		return streamedContent;
+//	}
 	
 	public void deletarFuncionario(Funcionario funcionario)
 	{
-		if (dao.deletarFuncionario(funcionario.getId())) 
-		{
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcion�rio deletado com sucesso"));
-			listaFuncionario.remove(funcionario);
-		} 
-		else 
-		{
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em deletar o Funcion�rio"));
-		}
+//		if (dao.deletarFuncionario(funcionario.getId()))
+//		{
+//			FacesContext.getCurrentInstance().addMessage(null,
+//					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Funcion�rio deletado com sucesso"));
+//			listaFuncionario.remove(funcionario);
+//		}
+//		else
+//		{
+//			FacesContext.getCurrentInstance().addMessage(null,
+//					new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro em deletar o Funcion�rio"));
+//		}
 		
 	}
 
-	public List<Funcionario> getListaFuncionario() {
-		return this.listaFuncionario;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public Funcionario getModel() {
-		return model;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
-	public void setModel(Funcionario model) {
-		this.model = model;
-	}
+	public StreamedContent getImagem() {
+		if (naoEstaVazioOuNulo(this.funcionario.getImagem().getFoto()))
+			return new DefaultStreamedContent(new ByteArrayInputStream(this.funcionario.getImagem().getFoto()));
 
-	public FuncionarioDAO getDao() {
-		return dao;
+		return null;
 	}
-
-	public void setDao(FuncionarioDAO dao) {
-		this.dao = dao;
-	}
-
-	public boolean isModificarCampos() {
-		return modificarCampos;
-	}
-
-	public void setModificarCampos(boolean modificarCampos) {
-		this.modificarCampos = modificarCampos;
-	}
-
-	public boolean isUploadImagem() {
-		return uploadImagem;
-	}
-
-	public void setUploadImagem(boolean uploadImagem) {
-		this.uploadImagem = uploadImagem;
-	}
-
-	public Funcionario getModelParaEditarEVisualizar() {
-		return modelParaEditarEVisualizar;
-	}
-
-	public void setModelParaEditarEVisualizar(Funcionario modelParaEditarEVisualizar) {
-		this.modelParaEditarEVisualizar = modelParaEditarEVisualizar;
-	}
-	
 }

@@ -1,11 +1,11 @@
 @charset "ISO-8859-1";
 
-#container {
+.container {
     margin: 0px auto 0px 28%;
 }
 
-#tamanhoForm {
-    width: 80%;
+.tamanhoForm {
+    width: 80% !important;
 }
 
 .ui-fileupload-content .ui-progressbar {
@@ -15,35 +15,17 @@
     top: 5px;
 }
 
-.ui-fileupload-row>div {
-    display: inline-block;
-    padding: 1px 5px;
-}
+/*@media screen and (width: 1024px) {*/
+/*    .ui-fileupload-row>div, .ui-fileupload-files {*/
+/*        display: flex !important;*/
+/*        justify-content: center;*/
+/*        align-items: center;*/
+/*    }*/
+/*}*/
 
-.ui-fileupload-files {
-    display: flex !important;
-    justify-content: center;
-}
-
-.ui-fileupload ui-widget ui-fileupload-responsive {
-    width: 90%;
-}
-
-.ui-fileupload-progress {
-    visibility: hidden;
-}
-
-@media screen and (width: 1024px) {
-    .ui-fileupload-row>div, .ui-fileupload-files {
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .ui-fileupload-row>div {
-        display: block;
-        padding: 1px 5px;
-    }
-}
+/*@media screen and (max-width: 425px) {*/
+/*    .ui-fileupload-row>div {*/
+/*        display: block;*/
+/*        padding: 1px 5px;*/
+/*    }*/
+/*}*/

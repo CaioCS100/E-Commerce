@@ -3,4 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    <validator>
+        <validator-id>CpfValidator</validator-id>
+        <validator-class>cesmac.si.validator.CpfValidator</validator-class>
+    </validator>
+
+    <validator>
+        <validator-id>EmailValidator</validator-id>
+        <validator-class>cesmac.si.validator.EmailValidator</validator-class>
+    </validator>
+
 </faces-config>

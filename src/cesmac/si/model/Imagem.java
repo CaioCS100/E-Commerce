@@ -9,7 +9,7 @@ public class Imagem implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String nome;
-    private byte[] imagem;
+    private byte[] foto;
     private String extensaoImagem;
 
     public Imagem() {}
@@ -30,12 +30,12 @@ public class Imagem implements Serializable {
         this.nome = nome;
     }
 
-    public byte[] getImagem() {
-        return imagem;
+    public byte[] getFoto() {
+        return foto;
     }
 
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public String getExtensaoImagem() {
@@ -53,7 +53,7 @@ public class Imagem implements Serializable {
         Imagem imagem1 = (Imagem) o;
         return Objects.equals(id, imagem1.id) &&
                 Objects.equals(nome, imagem1.nome) &&
-                Arrays.equals(imagem, imagem1.imagem) &&
+                Arrays.equals(foto, imagem1.foto) &&
                 Objects.equals(extensaoImagem, imagem1.extensaoImagem);
     }
 
@@ -67,7 +67,7 @@ public class Imagem implements Serializable {
         return "Imagem{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", imagem=" + Arrays.toString(imagem) +
+                ", foto=" + Arrays.toString(foto) +
                 ", extensaoImagem='" + extensaoImagem + '\'' +
                 '}';
     }

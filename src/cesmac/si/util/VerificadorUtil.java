@@ -15,8 +15,16 @@ public class VerificadorUtil {
         return objeto.toString().isEmpty();
     }
 
+    public static Boolean naoEstaVazio(Object objeto) {
+        return !estaVazio(objeto);
+    }
+
     public static Boolean estaVazioOuNulo(Object objeto) {
         return estaNulo(objeto) || estaVazio(objeto);
+    }
+
+    public static Boolean naoEstaVazioOuNulo(Object objeto) {
+        return naoEstaNulo(objeto) && naoEstaVazio(objeto);
     }
 
     public static Boolean listaNulaEVazia(List<? extends Object> lista) {
